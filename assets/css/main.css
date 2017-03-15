@@ -1,0 +1,204 @@
+body {
+    background: linear-gradient( rgba(0,0,0,0.3) , rgba(0,0,0,0.3)), url("../../images/bg.jpg");
+    background-color: black;
+}
+
+* {
+	font-family: 'Armata', sans-serif;
+	color: #FFFFFF;
+}
+
+h1 {
+    text-align: center;
+}
+
+#contener {
+    position:relative;
+    background-color: rgba (0,0,0,0.7);
+}
+
+#center {
+    position: absolute;
+    top: 50%;
+    height: 300px;
+    margin-top: 100px;
+}
+
+footer {
+    height: 25px; 
+    margin-top: 10px;
+    text-align: center;
+    background: rgba(0,0,0,0.7);
+}
+
+#loginPanel {
+    display: block;
+}
+
+#adminPanel {
+    display: none;
+}
+
+#faultPanel {
+    display: none;
+}
+
+#usersPanel {
+    display: none;
+}
+
+#bikesPanel {
+    display: none;
+}
+
+#backPanel {
+    display: none;
+}
+
+#bike {
+    text-align: center;
+}
+
+#userIcon {
+    color: black;
+}
+
+#keyIcon {
+    color: black;
+}
+
+.menuItem {
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    border-color: white;
+    border-radius: 4px;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.menuItem:hover {
+    background-color: rgba(255,255,255,0.5);
+}
+
+#menuBar {
+    margin-top: 10%;
+    overflow:hidden;
+}
+
+#backButton:hover {
+    background-color: rgba(255,0,0,0.5);
+}
+
+.button{
+        background-color: rgba(255,255,255,0.5);
+}
+
+#submitButton:hover {
+    color: white;
+    background-color: green;
+}
+
+#md label:hover {
+    color:black;
+}
+
+#md label i:hover {
+    color:black;
+}
+
+#button-default {
+    background-color: rgba(0, 0, 0, 0.5);
+    margin-bottom: 7px;
+}
+
+#button-default:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+span {
+    font-family: 'Armata', sans-serif;
+	color: #FFFFFF;
+}
+
+#list {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+#list ul li {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+#bike-list ul li{
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+
+#Panel-back {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+#Panel-back:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+#delete {
+    background-color: rgba(255, 0, 0, 0.5);
+    text-align: center;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+#delete:hover {
+    background-color: rgba(191, 0, 0, 0.5);
+}
+
+#status {
+    background-color: rgba(0, 255, 0, 0.5);
+    text-align: center;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+#button {
+    background-color: rgba(0, 0, 0, 0.5); 
+    border-color: white;
+}
+
+#button:hover {
+     background-color: rgba(0, 0, 0, 0.5); 
+    color: white;
+}
+
+#dropdown {
+     background-color: rgba(0, 0, 0, 0.5); 
+     border-color: white;
+}
+
+#dropdown:hover {
+    background-color: rgba(255, 255, 255, 0.5); 
+}
+
+#bikesTable {
+    margin-top: 75px;
+}
+
+.table-hover tr td: hover {
+    color: black;
+}
+
+.table tbody tr td, .table tbody tr th {
+    background: rgba(0, 0 ,0 ,0.5);
+    border-radius: 4px;
+}
+
+.table tbody tr:hover td, .table tbody tr:hover th {
+    background: rgba(255, 255, 255, 0.5);
+    color: black;
+}
+
+#scrollable {
+    overflow-y: scroll;
+    height: 200px;
+}
