@@ -280,79 +280,80 @@
                                 <div class="scrollbar-usersTable" id="scroll-style">
                                 <div class="force-overflow">
                                 <table class="table table-hover">
-                                    <tr>
-                                    <td>1</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                    </tr>
-                                    <tr>
-                                        <td>6</td>
-                                    </tr>
-                                    <tr>
-                                        <td>7</td>
-                                    </tr>
-                                    <tr>
-                                        <td>8</td>
-                                    </tr>
-                                    <tr>
-                                    <td>1</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                    </tr>
-                                    <tr>
-                                        <td>6</td>
-                                    </tr>
-                                    <tr>
-                                        <td>7</td>
-                                    </tr>
-                                    <tr>
-                                        <td>8</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                    </tr>
-                                    <tr>
-                                        <td>6</td>
-                                    </tr>
-                                    <tr>
-                                        <td>7</td>
-                                    </tr>
-                                    <tr>
-                                        <td>8</td>
-                                    </tr>
-                                        
+                                    <tbody id="users-table">
+                                        <tr>
+                                            <td>1</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                        </tr>
+                                        <tr>
+                                            <td>4</td>
+                                        </tr>
+                                        <tr>
+                                            <td>5</td>
+                                        </tr>
+                                        <tr>
+                                            <td>6</td>
+                                        </tr>
+                                        <tr>
+                                            <td>7</td>
+                                        </tr>
+                                        <tr>
+                                            <td>8</td>
+                                        </tr>
+                                         <tr>
+                                            <td>1</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                        </tr>
+                                        <tr>
+                                            <td>4</td>
+                                        </tr>
+                                        <tr>
+                                            <td>5</td>
+                                        </tr>
+                                        <tr>
+                                            <td>6</td>
+                                        </tr>
+                                        <tr>
+                                            <td>7</td>
+                                        </tr>
+                                        <tr>
+                                            <td>8</td>
+                                        </tr>
+                                         <tr>
+                                            <td>1</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                        </tr>
+                                        <tr>
+                                            <td>4</td>
+                                        </tr>
+                                        <tr>
+                                            <td>5</td>
+                                        </tr>
+                                        <tr>
+                                            <td>6</td>
+                                        </tr>
+                                        <tr>
+                                            <td>7</td>
+                                        </tr>
+                                        <tr>
+                                            <td>8</td>
+                                        </tr>
+                                    </tbody>    
                                 </table>
                             </div>
                             </div>
@@ -481,6 +482,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     
       
     <script>
@@ -534,6 +536,20 @@
         $("#adminPanel").css("display", "none");
         $("#usersPanel").css("display", "block");
         $("#backPanel").css("display", "block");
+            
+            
+        $.ajax({
+            url: "users.php",
+            data: "",
+            dataType: "text",
+            success: function(data){
+                $("#users-table").append("<tr><td></td></tr>");
+                $("#users-table :last-child :only-child").text(data);
+            }    
+        });    
+            
+            
+            
         $("#contener").fadeToggle();
         });  
     </script>
