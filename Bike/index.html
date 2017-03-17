@@ -152,30 +152,8 @@
                             <div class="scrollbar-serviceList" id="scroll-style">
                                 <div class="force-overflow">
                                     <table class="table table-hover">
-                                        <tr>
-                                            <td>1</td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                            </tr>
-                                            <tr>
-                                                <td>4</td>
-                                            </tr>
-                                            <tr>
-                                                <td>5</td>
-                                            </tr>
-                                            <tr>
-                                                <td>6</td>
-                                            </tr>
-                                            <tr>
-                                                <td>7</td>
-                                            </tr>
-                                            <tr>
-                                                <td>8</td>
-                                        </tr>
+                                        <tbody id="servisants-list">
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -187,6 +165,7 @@
                             <div class="scrollbar-orderTable" id="scroll-style">
                                 <div class="force-overflow">
                                     <table class="table table-hover">
+                                        <tbody id="orders-list">
                                         <tr>
                                             <td>1</td>
                                             </tr>
@@ -211,6 +190,7 @@
                                             <tr>
                                                 <td>8</td>
                                         </tr>
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -231,32 +211,9 @@
                         <div class="col-md-3 col-lg-3">
                             <div class="scrollbar-faultiesTable" id="scroll-style">
                                 <div class="force-overflow">
-                                    <table id="faulties-list" class="table table-hover">
-                                            <tr>
-                                                <td>1</td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                            </tr>
-                                            <tr>
-                                                <td>4</td>
-                                            </tr>
-                                            <tr>
-                                                <td>5</td>
-                                            </tr>
-                                            <tr>
-                                                <td>6</td>
-                                            </tr>
-                                            <tr>
-                                                <td>7</td>
-                                            </tr>
-                                            <tr>
-                                                <td>8</td>
-                                            </tr>
-
+                                    <table class="table table-hover">
+                                        <tbody id="faulties-list">
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -352,26 +309,10 @@
                         <h3>Lista rowerów</h3>
                         <div class="scrollbar-bikePanel" id="scroll-style">
                             <div class="force-overflow">
-                            <table class="table"><tbody>
-                            <tr>
-                                <td>#13242</td>
-                            </tr>
-                            <tr>
-                                <td>#13254</td>
-                            </tr>
-                            <tr>
-                                <td>#24432</td>
-                            </tr>
-                            <tr>
-                                <td>#33432</td>
-                            </tr>
-                            <tr>
-                                <td>#28432</td>
-                            </tr>
-                            <tr>
-                                <td>#24332</td>
-                            </tr>    
-                            </tbody></table>
+                            <table class="table">
+                                <tbody id="bikes-table">    
+                                </tbody>
+                            </table>
                         </div>
                         </div>
                     </div>
@@ -393,11 +334,9 @@
                 </div>            
             </div>
                   
-
             
             
             
-              
         </div>
     </div>
       
@@ -442,6 +381,27 @@
         $("#adminPanel").css("display", "none");
         $("#faultPanel").css("display", "block");
         $("#backPanel").css("display", "block");
+            
+        $.ajax({
+            url: "faulties.php",
+            data: "",
+            dataType: "text",
+            success: function(data){
+                $("#faulties-list").empty();
+                $("#faulties-list").html(data);
+            }    
+        });
+            
+        $.ajax({
+            url: "servisants.php",
+            data: "",
+            dataType: "text",
+            success: function(data){
+                $("#servisants-list").empty();
+                $("#servisants-list").html(data);
+            }    
+        });    
+            
         $("#contener").fadeToggle();
         });  
     </script>
@@ -464,8 +424,7 @@
         $("#adminPanel").css("display", "none");
         $("#usersPanel").css("display", "block");
         $("#backPanel").css("display", "block");
-            
-            
+             
         $.ajax({
             url: "users.php",
             data: "",
@@ -475,8 +434,6 @@
                 $("#users-table").append(data);
             }    
         });    
-            
-            
             
         $("#contener").fadeToggle();
         });  
@@ -488,6 +445,17 @@
         $("#adminPanel").css("display", "none");
         $("#bikesPanel").css("display", "block");
         $("#backPanel").css("display", "block");
+            
+            $.ajax({
+            url: "bikes.php",
+            data: "",
+            dataType: "text",
+            success: function(data){
+                $("#bikes-table").empty();
+                $("#bikes-table").append(data);
+            }    
+        });
+            
         $("#contener").fadeToggle();
         });  
     </script>

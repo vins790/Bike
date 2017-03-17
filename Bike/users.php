@@ -5,7 +5,7 @@ include 'connect.php';
             while ($row = $data->fetch_assoc()) { 
                 echo "<tr><td>";
                 echo $row['login'];
-                echo    "</td></tr>";
+                echo "</td></tr>";
             }
             $data->close();
         }
