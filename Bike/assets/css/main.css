@@ -250,7 +250,7 @@ span {
 	background-color: #555;
 }
 
-.table tbody tr td span:hover {
+ .table tbody tr:hover td span {
     color:black;
 }
 
