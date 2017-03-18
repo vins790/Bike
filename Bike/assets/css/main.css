@@ -55,11 +55,24 @@ footer {
     display: none;
 }
 
+ #stationsPanel {
+    visibility: hidden;
+    height: 0px;
+}
+
 #bike {
     text-align: center;
 }
 
 #userIcon {
+    color: black;
+}
+
+#mapIcon {
+    color: black;
+}
+
+#bookIcon {
     color: black;
 }
 
