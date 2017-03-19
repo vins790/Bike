@@ -115,9 +115,11 @@
                         <h4>Serwisant</h4>
                         
                           <ul class="list-group">
-                            <li class="list-group-item">ID : #21323</li>
-                            <li class="list-group-item">Imię : Jan</li>
-                            <li class="list-group-item">Nazwisko : Kowalski</li>
+                            <li class="list-group-item" id="servis-id"><strong>ID : </strong><span></span></li>
+                            <li class="list-group-item" id="name"><strong>Imię : </strong><span></span></li>
+                            <li class="list-group-item" id="surname"><strong>Nazwisko : </strong><span></span></li>
+                            <li class="list-group-item" id="mail"><strong>E-mail : </strong><span></span></li>
+                            <li class="list-group-item" id="faultAmount"><strong>Awarie : </strong><span></span></li>
                           </ul>
                     </div>
                     
@@ -129,18 +131,30 @@
                         </div>
 
                         <div class="col-md-12 col-lg-12"><h1 id="header">System zarządzania awariami</h1></div>
+                        
+                        <!--PRZYCISKI-->
+                            <div class="col-md-6 col-lg-6">
+                                <button id="button-default" type="button" class="btn btn-default btn-lg add"><i class="fa fa-angle-double-left" aria-hidden="true"></i></button>
+                            </div>
+                            
+                            <div class="col-md-6 col-lg-6">
+                                <button id="button-default" type="button" class="btn btn-default btn-lg odd"><i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
+                            </div>
+
                     </div>
                     
                     <!-- PANEL AWARII-->
                     <div id="list" class="col-md-3 col-md-offset-1 col-lg-3 col-lg-offset-1">
-                        <h4>Awarie</h4>
+                        <h4>Awaria Info</h4>
                         
                           <ul class="list-group">
-                            <li class="list-group-item">ID awarii : #23324</li>
-                            <li class="list-group-item">Uszkodzenie przedniej opony.</li>
+                                <li class="list-group-item" id="fault-id"><strong>ID awarii : </strong><span></span></li>
+                                <li class="list-group-item" id="bike-id"><strong>ID roweru : </strong><span></span></li>
+                                <li class="list-group-item" id="description"><strong></strong><span>Opis</span></li>
                             </ul>
-                        <div id="delete" class="col-md-6 col-lg-6">Usuń</div>
-                        <div id="status" class="col-md-6 col-lg-6">Status</div>
+                        <div id="delete" class="col-md-12 col-lg-12">Usuń</div>
+                        <div id="status" class="col-md-12 col-lg-12">Status</div>
+                        <div id="show-servis" class="col-md-12 col-lg-12">Serwisant</div>
                     </div>
                 </div>
                 
@@ -162,53 +176,22 @@
                     
                         <!-- TABELA PRZYDZIELONYCH AWARII-->
                         <div class="col-md-4 col-md-offset-1 col-lg-4 col-lg-offset-1">
+                                                        
+                            <div class="col-md-12 col-lg-12">
                             <div class="scrollbar-orderTable" id="scroll-style">
                                 <div class="force-overflow">
                                     <table class="table table-hover">
                                         <tbody id="orders-list">
-                                        <tr>
-                                            <td>1</td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                            </tr>
-                                            <tr>
-                                                <td>4</td>
-                                            </tr>
-                                            <tr>
-                                                <td>5</td>
-                                            </tr>
-                                            <tr>
-                                                <td>6</td>
-                                            </tr>
-                                            <tr>
-                                                <td>7</td>
-                                            </tr>
-                                            <tr>
-                                                <td>8</td>
-                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
-                    
-                        <!--PRZYCISKI-->
-                        <div class="col-md-1 col-lg-1">
-                            <div class="col-md-12 col-lg-12">
-                                <button id="button-default" type="button" class="btn btn-default btn-lg"><i class="fa fa-angle-double-left" aria-hidden="true"></i></button>
-                            </div>
-                            
-                            <div class="col-md-12 col-lg-12">
-                                <button id="button-default" type="button" class="btn btn-default btn-lg"><i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
-                            </div>
                         </div>
                     
+                    
                         <!-- TABELA AWARII-->
-                        <div class="col-md-3 col-lg-3">
+                        <div class="col-md-3 col-md-offset-1 col-lg-3 col-lg-offset-1">
                             <div class="scrollbar-faultiesTable" id="scroll-style">
                                 <div class="force-overflow">
                                     <table class="table table-hover">
@@ -401,15 +384,315 @@
                 $("#servisants-list").html(data);
             }    
         });
+        
     
         $("#contener").fadeToggle();
         });  
     </script>
     
     <script>
-        $("#faulties-list").delegate('tr', 'click', function(){
-                        
+      $('div[id="list"]').delegate('#delete', 'click', function(){
+        var faultID=$('li[id="fault-id"] > span').text();
+        $('li[id="fault-id"] > span').empty();
+        $('li[id="bike-id"] > span').empty();
+        $('li[id="description"] > span').empty();
+  
+          
+        $.ajax({
+            type: "POST",
+            url: "faultDelete.php",
+            data: {fault: faultID},
+            success: function(data){
+                alert(data);
+            }});
+      
+        $.ajax({
+            url: "faulties.php",
+            data: "",
+            dataType: "text",
+            success: function(data){
+                $("#faulties-list").empty();
+                $("#faulties-list").html(data);
+            }});
+          
+      });
+    </script>
+      
+    <script>
+      $('div[id="list"]').delegate('#show-servis', 'click', function(){
+        var faultID=$('li[id="fault-id"] > span').text();
+        var servisID=null;
+                
+        $.ajax({
+            type: "POST",
+            url: "orderOwner.php",
+            data: {fault: faultID},
+            success: function(data){
+                servisID=data;
+                
+                $.ajax({
+                type: "POST",
+                url: "servisInfo.php",
+                data: {servis: servisID},
+                success: function(data){
+                    $('li[id="servis-id"] > span').empty();
+                    $('li[id="name"] > span').empty();
+                    $('li[id="surname"] > span').empty();
+                    $('li[id="mail"] > span').empty();
+
+
+                    $('li[id="servis-id"] > span').append(servisID);
+                    $('li[id="name-id"] > span').append(data['imie']);
+                    $('li[id="surname"] > span').append(data['nazwisko']);
+                    $('li[id="mail"] > span').append(data['mail']);
+
+                }    
+            });
+          
+              $.ajax({
+                    type: "POST",
+                    url: "ordersCounter.php",
+                    data: {servis: servisID},
+                    success: function(data){
+                        $('li[id="faultAmount"] > span').empty();
+                        $('li[id="faultAmount"] > span').append(data);
+                    }
+                });
+
+                $.ajax({
+                    type: "POST",
+                    url: "orders.php",
+                    data: {id: servisID},
+                    dataType: "text",
+                    success: function(data){
+                        $("#orders-list").empty();
+                        $("#orders-list").html(data);
+                }    
+            });
+        }});
+        
+        });
+    </script>  
+      
+    <script>
+        $("#faulties-list").delegate('tr', 'click', function(clicked){
+                var faultID=clicked.currentTarget.getAttribute("id");
+            $.ajax({
+                type: "POST",
+                url: "faultInfo.php",
+                data: {fault: faultID},
+                success: function(data){
+                    
+                    $('li[id="fault-id"] > span').empty();
+                    $('li[id="bike-id"] > span').empty();
+                    $('li[id="description"] > span').empty();
+                    
+                    $('li[id="fault-id"] > span').append(faultID);
+                    $('li[id="bike-id"] > span').append(data['id_rower']);
+                    $('li[id="description"] > span').append(data['opis']);
+                    
+                    
+                    $('div[id="status"]').empty();
+                    
+                    var status=data['status'];
+                    
+                    if(status=="0") {
+                        $('div[id="status"]').css("background-color",'rgba(0, 255, 0, 0.5)');
+                        $('div[id="status"]').text("OK");
+                        $('div[id="show-servis"]').css("display","block");
+                    }else if(status=="1") {
+                        $('div[id="status"]').css("background-color",'rgba(255, 0, 0, 0.5)');
+                        $('div[id="status"]').text("awaria");
+                        $('div[id="show-servis"]').css("display","none");
+                    }else if(status=="2") {
+                        $('div[id="status"]').css("background-color",'rgba(255, 255, 0, 0.5)');
+                        $('div[id="status"]').text("w toku");
+                        $('div[id="show-servis"]').css("display","block");
+                    }
+                }    
+            });
         });  
+    </script>
+
+    <script>
+        $("#orders-list").delegate('tr', 'click', function(clicked){
+                var faultID=clicked.currentTarget.getAttribute("id");
+            $.ajax({
+                type: "POST",
+                url: "faultInfo.php",
+                data: {fault: faultID},
+                success: function(data){
+                    
+                    $('li[id="fault-id"] > span').empty();
+                    $('li[id="bike-id"] > span').empty();
+                    $('li[id="description"] > span').empty();
+                    
+                    $('li[id="fault-id"] > span').append(faultID);
+                    $('li[id="bike-id"] > span').append(data['id_rower']);
+                    $('li[id="description"] > span').append(data['opis']);
+                    
+                    
+                    $('div[id="status"]').empty();
+                    
+                    var status=data['status'];
+                    
+                    if(status=="0") {
+                        $('div[id="status"]').css("background-color",'rgba(0, 255, 0, 0.5)');
+                        $('div[id="status"]').text("OK");
+                        $('div[id="show-servis"]').css("display","block");
+                    }else if(status=="1") {
+                        $('div[id="status"]').css("background-color",'rgba(255, 0, 0, 0.5)');
+                        $('div[id="status"]').text("awaria");
+                        $('div[id="show-servis"]').css("display","none");
+                    }else if(status=="2") {
+                        $('div[id="status"]').css("background-color",'rgba(255, 255, 0, 0.5)');
+                        $('div[id="status"]').text("w toku");
+                        $('div[id="show-servis"]').css("display","block");
+                    }
+                }    
+            });
+        });  
+    </script>
+   
+    <script>
+        $("#servisants-list").delegate('tr', 'click', function(clicked){
+                var servisID=clicked.currentTarget.getAttribute("id");
+            $.ajax({
+                type: "POST",
+                url: "servisInfo.php",
+                data: {servis: servisID},
+                success: function(data){
+                    $('li[id="servis-id"] > span').empty();
+                    $('li[id="name"] > span').empty();
+                    $('li[id="surname"] > span').empty();
+                    $('li[id="mail"] > span').empty();
+                    
+                    
+                    $('li[id="servis-id"] > span').append(servisID);
+                    $('li[id="name-id"] > span').append(data['imie']);
+                    $('li[id="surname"] > span').append(data['nazwisko']);
+                    $('li[id="mail"] > span').append(data['mail']);
+                    
+                }    
+            });
+            
+            $.ajax({
+                type: "POST",
+                url: "ordersCounter.php",
+                data: {servis: servisID},
+                success: function(data){
+                    $('li[id="faultAmount"] > span').empty();
+                    $('li[id="faultAmount"] > span').append(data);
+                }
+            });
+            
+            $.ajax({
+                type: "POST",
+                url: "orders.php",
+                data: {id: servisID},
+                dataType: "text",
+                success: function(data){
+                    $("#orders-list").empty();
+                    $("#orders-list").html(data);
+            }    
+            });
+        });  
+    </script>
+      
+    <script>
+        
+        function addOrder(IDs){
+            $.ajax({
+            type: "POST",
+            url: "addOrder.php",
+            data: {array: JSON.stringify(IDs)},
+            success: function(data){
+                $.ajax({
+                type: "POST",
+                url: "orders.php",
+                data: {id: data},
+                dataType: "text",
+                success: function(data){
+                    $("#orders-list").empty();
+                    $("#orders-list").html(data);
+                    reloadFaulties();
+                },
+                error: function(){
+                    
+                } 
+                })   
+            }
+        })
+        }
+            
+        function reloadFaulties(){
+        $.ajax({
+        url: "faulties.php",
+        data: "",
+        dataType: "text",
+        success: function(data){
+            $("#faulties-list").empty();
+            $("#faulties-list").hide().fadeToggle(300);
+            $("#faulties-list").html(data);
+            }    
+        })}
+        
+        $('button[class~="add"]').click(function(){
+            var IDs = new Array(2);
+            IDs[0] = $('li[id="fault-id"] > span').text();
+            IDs[1] = $( 'li[id="servis-id"] > span').text();
+            
+            var dfd = $.Deferred();
+            dfd.done([addOrder]);
+            
+            dfd.resolve(IDs);
+        }) 
+    </script>
+      
+    <script>
+        
+        function oddOrder(faultID){
+            $.ajax({
+                type: "POST",
+                url: "oddOrder.php",
+                data: {id: faultID},
+                success: function(data){
+                    $.ajax({
+                    type: "POST",
+                    url: "orders.php",
+                    data: {id: data},
+                    dataType: "text",
+                    success: function(data){
+                        $("#orders-list").empty();
+                        $("#orders-list").html(data);
+                        reloadFaulties();
+                    }     
+                    })
+                }});
+        }
+        
+        function reloadFaulties(){
+            $.ajax({
+            url: "faulties.php",
+            data: "",
+            dataType: "text",
+            success: function(data){
+                $("#faulties-list").empty();
+                $("#faulties-list").html(data);
+            }    
+            })
+        }
+                                 
+        $('button[class~="odd"]').click(function(){
+          var faultID=$('li[id="fault-id"] > span').text();
+            
+          var dfd = $.Deferred();
+          dfd.done([oddOrder]);
+    
+          if(faultID){
+            dfd.resolve(faultID);
+          }
+        })
     </script>  
       
     <script>

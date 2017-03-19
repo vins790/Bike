@@ -109,6 +109,8 @@ footer {
 #button-default {
     background-color: rgba(0, 0, 0, 0.5);
     margin-bottom: 7px;
+    margin:0 auto;
+    display:block;
 }
 
 #button-default:hover {
@@ -124,6 +126,7 @@ span {
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 4px;
     margin-bottom: 8px;
+    height: 330px;
 }
 
 #list ul li {
@@ -136,6 +139,7 @@ span {
 
 
 #Panel-back {
+    margin-top: 8px;
     background-color: rgba(0, 0, 0, 0.5);
 }
 
@@ -144,6 +148,8 @@ span {
 }
 
 #delete {
+    position: relative;
+    bottom: 8px;
     background-color: rgba(255, 0, 0, 0.5);
     text-align: center;
     border-radius: 4px;
@@ -154,11 +160,20 @@ span {
     background-color: rgba(191, 0, 0, 0.5);
 }
 
-#status {
-    background-color: rgba(0, 255, 0, 0.5);
+#status, #show-servis {
+    bottom: 8px;
+    background-color: rgba(150, 150, 150, 0.5);
     text-align: center;
     border-radius: 4px;
     margin-bottom: 8px;
+}
+
+#show-service {
+    display: none;
+}
+
+#show-servis:hover {
+    background-color: rgba(200 , 200, 200, 0.7);
 }
 
 #button {
@@ -264,4 +279,8 @@ span {
 
 .table tbody tr td i[id="yellow"] {
     color: rgba(230,230,0,1);
+}
+
+#description {
+    min-height: 100px;
 }
