@@ -2,7 +2,6 @@
 include 'connect.php';
 
         if( $data = $mysqli->query("SELECT id_awarii, status FROM awarie") ) {
-            $temp=0;
             while ($row = $data->fetch_assoc()) { 
                 echo '<tr><td>#<span id="f';
                 echo $row['id_awarii'];
@@ -18,7 +17,6 @@ include 'connect.php';
                 }
                 
                 echo "</td></tr>";
-                $temp=$temp+1;
             }
             $data->close();
         }
