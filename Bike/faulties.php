@@ -3,9 +3,9 @@ include 'connect.php';
 
         if( $data = $mysqli->query("SELECT id_awarii, status FROM awarie") ) {
             while ($row = $data->fetch_assoc()) { 
-                echo '<tr><td>#<span id="f';
+                echo '<tr id="';
                 echo $row['id_awarii'];
-                echo '">';
+                echo '"><td>#<span>';
                 echo $row['id_awarii'] ;
                 
                 if($row['status'] == 1){
