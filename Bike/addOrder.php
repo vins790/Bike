@@ -7,5 +7,4 @@ include 'connect.php';
             }
             if($data = $mysqli->query("INSERT INTO przypisania_awarii(id_awarii, id_serwis) VALUES($faultID, $servisID)")) {
             }
-            echo $servisID;
 ?>
