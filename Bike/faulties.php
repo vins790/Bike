@@ -1,24 +1,16 @@
 <?php
 include 'connect.php';
 
+$array = array();
         if( $data = $mysqli->query("SELECT id_awarii, status FROM awarie") ) {
-            while ($row = $data->fetch_assoc()) { 
-                echo '<tr id="';
-                echo $row['id_awarii'];
-                echo '"><td>#<span>';
-                echo $row['id_awarii'] ;
-                
-                if($row['status'] == 1){
-                    echo '</span></td><td><i class="fa fa-circle" aria-hidden="true" id="red"></i>';
-                }else if($row['status'] == 0){
-                    echo '</span></td><td><i class="fa fa-circle" aria-hidden="true" id="green"></i>';
-                }else {
-                    echo '</span></td><td><i class="fa fa-circle" aria-hidden="true" id="yellow"></i>';
-                }
-                
-                echo "</td></tr>";
+            while ($row = $data->fetch_array(MYSQL_ASSOC)) { 
+                $array[] = $row;         
             }
+            header('Content-Type: application/json');
+            echo json_encode($array);
+            
             $data->close();
+            $mysqli->close();
         }
          
 ?>
