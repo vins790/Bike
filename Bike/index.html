@@ -5,19 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Wypożyczalnia Rowerów</title>
- 
+
     <!-- Latest compiled and minified CSS -->
       <link rel="stylesheet" href="assets/css/main.css" />
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
       <link href='http://fonts.googleapis.com/css?family=Armata&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
       <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
  
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
   </head>
   <body>
         
@@ -316,9 +310,6 @@
                     <button id="Panel-back" type="button" class="btn btn-default btn-lg"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i><span>  Powrót</span></button>
                 </div>            
             </div>
-                  
-            
-            
             
         </div>
     </div>
@@ -333,186 +324,25 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    
+    <script src="assets/js/functions.js"></script> 
       
     <script>
-        $(function(){
-        $("#contener").hide().fadeToggle(1500)});
-    </script>
     
-    <script>
+        $("#contener").hide().fadeToggle(1500);
+   
         $("#submitButton").click(function(){
         $("#contener").hide(300);
         $("#loginPanel").css("display", "none");
         $("#adminPanel").css("display", "block");
         $("#contener").fadeToggle();
         });  
-    </script>
-      
-    <script>
+    
         $("#backButton").click(function(){
         $("#contener").hide();
         $("#loginPanel").css("display", "block");
         $("#adminPanel").css("display", "none");
         $("#contener").fadeToggle();
-        });  
-    </script>
-      
-    <script>
-        function loadFaulties(){
-        $.ajax({
-            url: "faulties.php",
-            data: "",
-            dataType: "text",
-            success: function(data){
-                $("#faulties-list").empty();
-                var items = []; 
-                $.each(JSON.parse(data), function(id,json) {
-                   var color;
-                   if(json.status==1){
-                       color="red";
-                   }else if(json.status==0){
-                       color="green";
-                   }else if(json.status==2){
-                       color="yellow";
-                   }else{
-                       color=null;
-                   }
-                
-                   items.push("<tr id='" + json.id_awarii + "'><td>#<span>" + json.id_awarii + "</span></td><td><i class='fa fa-circle' aria-hidden='true' id=" + color + "></i>");
-                   $("#faulties-list").html(items);
-                });
-            }    
-        });};
-        
-        function loadServisants(){
-        $.ajax({
-            url: "servisants.php",
-            data: "",
-            dataType: "text",
-            success: function(data){
-                $("#servisants-list").empty();
-                var items = [];
-                $.each(JSON.parse(data), function(id,json) {
-                    items.push("<tr id='" + json.id_serwis + "'><td>#<span>" + json.id_serwis + "</span><td></tr>");
-                });
-                $("#servisants-list").html(items);
-            }    
-        });}
-        
-        function deleteFault(faultID){  
-        $.ajax({
-            type: "POST",
-            url: "faultDelete.php",
-            data: {fault: faultID},
-            success: function(data){}
-        });}
-        
-        function loadOrders(servisID){
-        $.ajax({
-            type: "POST",
-            url: "orders.php",
-            data: {id: servisID},
-            dataType: "text",
-            success: function(data){
-                $("#orders-list").empty();
-                var items = [];
-                $.each(JSON.parse(data), function(id, json){
-                    items.push("<tr id='" + json.id_awarii + "'><td>#<span>" + json.id_awarii + "</span></td></tr>");
-                })
-                $("#orders-list").html(items);
-        }});}
-        
-        function coutOrders(servisID){
-          $.ajax({
-                type: "POST",
-                url: "ordersCounter.php",
-                data: {servis: servisID},
-                success: function(data){
-                    $('li[id="faultAmount"] > span').empty();
-                    $('li[id="faultAmount"] > span').append(data);
-                }
-        });}
-        
-        function servisInfo(servisID){
-                $.ajax({
-                type: "POST",
-                url: "servisInfo.php",
-                data: {servis: servisID},
-                success: function(data){
-                    $('li[id="servis-id"] > span').empty();
-                    $('li[id="name"] > span').empty();
-                    $('li[id="surname"] > span').empty();
-                    $('li[id="mail"] > span').empty();
-                    
-                    $('li[id="servis-id"] > span').append(servisID);
-                    $('li[id="name-id"] > span').append(data['imie']);
-                    $('li[id="surname"] > span').append(data['nazwisko']);
-                    $('li[id="mail"] > span').append(data['mail']);
-                }    
-        });}
-        
-        function faultInfo(faultID){
-                $.ajax({
-                type: "POST",
-                url: "faultInfo.php",
-                data: {fault: faultID},
-                success: function(data){
-                    
-                    $('li[id="fault-id"] > span').empty();
-                    $('li[id="bike-id"] > span').empty();
-                    $('li[id="description"] > span').empty();
-                    
-                    $('li[id="fault-id"] > span').append(faultID);
-                    $('li[id="bike-id"] > span').append(data['id_rower']);
-                    $('li[id="description"] > span').append(data['opis']);
-                    
-                    
-                    $('div[id="status"]').empty();
-                    
-                    var status=data['status'];
-                    
-                    if(status=="0") {
-                        $('div[id="status"]').css("background-color",'rgba(0, 255, 0, 0.5)');
-                        $('div[id="status"]').text("OK");
-                        $('div[id="show-servis"]').css("display","block");
-                    }else if(status=="1") {
-                        $('div[id="status"]').css("background-color",'rgba(255, 0, 0, 0.5)');
-                        $('div[id="status"]').text("awaria");
-                        $('div[id="show-servis"]').css("display","none");
-                    }else if(status=="2") {
-                        $('div[id="status"]').css("background-color",'rgba(255, 255, 0, 0.5)');
-                        $('div[id="status"]').text("w toku");
-                        $('div[id="show-servis"]').css("display","block");
-                    }
-                }    
-            });}
-        
-        function addOrder(IDs){
-            var array = JSON.parse("[" + IDs + "]"); 
-            $.ajax({
-            type: "POST",
-            url: "addOrder.php",
-            data: {array: JSON.stringify(IDs)},
-            success: function(data){
-                loadOrders(array[1]);
-                loadFaulties();
-                }   
-        });}
-        
-        function oddOrder(faultID){
-            alert(faultID);
-            $.ajax({
-                type: "POST",
-                url: "oddOrder.php",
-                data: {id: faultID},
-                success: function(data){
-                    alert(data);
-                        loadOrders(data);
-                        loadFaulties();
-                    }});
-            
-        }
+        }); 
         
         $("#faulties").click(function(){
         $("#contener").hide(300);
@@ -539,7 +369,7 @@
     
             $.ajax({
                 type: "POST",
-                url: "orderOwner.php",
+                url: "assets/php/orderOwner.php",
                 data: {fault: faultID},
                 success: function(data){
                 servisID=data;        
@@ -598,7 +428,7 @@
         $("#backPanel").css("display", "block");
              
         $.ajax({
-            url: "users.php",
+            url: "assets/php/users.php",
             data: "",
             dataType: "text",
             success: function(data){
@@ -621,7 +451,7 @@
         $("#backPanel").css("display", "block");
             
             $.ajax({
-            url: "bikes.php",
+            url: "assets/php/bikes.php",
             data: "",
             dataType: "text",
             success: function(data){
