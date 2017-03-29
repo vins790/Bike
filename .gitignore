@@ -47,3 +47,11 @@ Temporary Items
 .apdisk
 .idea/
 Bike.iml
+
+# Android
+*.iml
+/App/.gradle
+/App/local.properties
+/App/.idea/workspace.xml
+/App/.idea/libraries
+/App/build
