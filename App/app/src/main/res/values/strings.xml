@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">App</string>
+    <string name="app_name">Bike</string>
+    <string name="login_title">BIKE</string>
+    <string name="zaloguj_btn">Zaloguj</string>
+    <string name="anuluj_btn">Anuluj</string>
+    <string name="enter_message">Zalogouj się do aplikacji</string>
+    <string name="password_hint">Podaj hasło</string>
+    <string name="create_account_text">Nie masz konta? Utwórz je tutaj</string>
+    <string name="recoll_password_string">Przypomnij hasło</string>
+    <string name="login_hint">Wprowadź login</string>
 </resources>
