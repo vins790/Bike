@@ -50,7 +50,7 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                 bufferedWriter.close();
                 outputStream.close();
                 InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"UTF-8"));
                 String result="";
                 String line="";
                 while((line = bufferedReader.readLine())!= null) {
@@ -79,7 +79,7 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
     protected void onPostExecute(String result) {
         String post = "przed";
         try {
-            post = new String(result.getBytes("UTF-8"), "ISO-8859-1");
+            post = new String(result.getBytes("UTF-8"), "UTF-8");
         }catch (UnsupportedEncodingException e){
             post = ":c";
         }
