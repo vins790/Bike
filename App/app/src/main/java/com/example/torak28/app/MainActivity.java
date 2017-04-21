@@ -24,6 +24,10 @@ public class MainActivity extends AppCompatActivity {
         //TODO logowanie
         String username = mUsername.getText().toString();
         String password = mPassword.getText().toString();
+
+        String type = "login";
+        BackgroundWorker backgroundWorker = new BackgroundWorker(this);
+        backgroundWorker.execute(type, username, password);
     }
 
     public void cancel(View view) {
