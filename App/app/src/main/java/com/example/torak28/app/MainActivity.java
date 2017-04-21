@@ -22,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void login(View view) {
         //TODO logowanie
+        String username = mUsername.getText().toString();
+        String password = mPassword.getText().toString();
     }
 
     public void cancel(View view) {
