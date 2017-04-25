@@ -1,6 +1,7 @@
 body {
     background: linear-gradient( rgba(0,0,0,0.3) , rgba(0,0,0,0.3)), url("../../images/bg.jpg");
     background-color: black;
+    background-repeat: no-repeat;
 }
 
 * {
@@ -283,4 +284,20 @@ span {
 
 #description {
     min-height: 100px;
+}
+
+.blur-all {
+    -webkit-filter: blur(10px);
+    -moz-filter: blur(10px);
+    -o-filter: blur(10px);
+    -ms-filter: blur(10px);
+    filter: blur(10px);
+}
+
+.alignleft {
+	float: left;
+}
+
+.alignright {
+	float: right;
 }

@@ -295,13 +295,13 @@
                     </div>
                 
                 <div id="bike-list" class="col-md-6 col-lg-6">
-                    <h3>Rower: #21323</h3>
-                    <ul class="list-group">
-                        <li class="list-group-item">ID roweru : #21323</li>
-                        <li class="list-group-item">Status : Wypożyczony</li>
-                        <li class="list-group-item">Stan : Sprawny</li>
-                        <li class="list-group-item">Data przeglądu : 01.01.2017</li>
-                        <li class="list-group-item">Data następnegoo przeglądu : 06.04.2017</li>
+                    <h3>Rower Info</h3>
+                    <ul class="list-group" id="bikeInfo">
+                        <li class="list-group-item">ID roweru : </li>
+                        <li class="list-group-item">Status : </li>
+                        <li class="list-group-item">Stan : </li>
+                        <li class="list-group-item">Data przeglądu : </li>
+                        <li class="list-group-item">Data następnego przeglądu : </li>
                     </ul>
                 </div>
             </div>
@@ -328,55 +328,58 @@
       
     <script>
     
+        //$(document).ajaxStart(function(){
+        // $('body > *').wrap('<div class="blur-all">'); 
+        //});
+        
+        //$(document).ajaxStop(function(){
+        // $('body > *').unwrap(); 
+        //});
+        
         $("#contener").hide().fadeToggle(1500);
-   
+        
+        
         $("#submitButton").click(function(){
-        $("#contener").hide(300);
-        $("#loginPanel").css("display", "none");
-        $("#adminPanel").css("display", "block");
-        $("#contener").fadeToggle();
+        go("loginPanel","adminPanel");
         });  
     
         $("#backButton").click(function(){
-        $("#contener").hide();
-        $("#loginPanel").css("display", "block");
-        $("#adminPanel").css("display", "none");
-        $("#contener").fadeToggle();
+        go("adminPanel","loginPanel");
         }); 
         
         $("#faulties").click(function(){
-        $("#contener").hide(300);
-        $("#adminPanel").css("display", "none");
-        $("#faultPanel").css("display", "block");
-        $("#backPanel").css("display", "block");
-        loadFaulties();
-        loadServisants();
-        $("#contener").fadeToggle();
+        go("adminPanel","faultPanel", function(){
+            $("#backPanel").css("display", "block");
+            loadFaulties();
+            loadServisants();    
+        });
         });
     
         $('div[id="list"]').delegate('#delete', 'click', function(){
-            var faultID=$('li[id="fault-id"] > span').text();
-            $('li[id="fault-id"] > span').empty();
-            $('li[id="bike-id"] > span').empty();
-            $('li[id="description"] > span').empty();
-            deleteFault(faultID);
-            loadFaulties();
+            if(!( $('li[id="fault-id"] > span').is(':empty'))){
+                var faultID=$('li[id="fault-id"] > span').text();
+                $('li[id="fault-id"] > span').empty();
+                $('li[id="bike-id"] > span').empty();
+                $('li[id="description"] > span').empty();
+                deleteFault(faultID);
+                loadFaulties();
+            }
         });
     
         $('div[id="list"]').delegate('#show-servis', 'click', function(){
+            if(!( $('li[id="fault-id"] > span').is(':empty'))){
             var faultID=$('li[id="fault-id"] > span').text();
-            var servisID=null;
     
             $.ajax({
                 type: "POST",
                 url: "assets/php/orderOwner.php",
                 data: {fault: faultID},
-                success: function(data){
-                servisID=data;        
+                success: function(data){      
                 servisInfo(data);
                 coutOrders(data);
                 loadOrders(data);
             }});
+            }
         });
     
         $("#faulties-list").delegate('tr', 'click', function(clicked){
@@ -398,15 +401,16 @@
 
         $('button[class~="add"]').click(function(){
             var IDs = [];
-            IDs[0] = $('li[id="fault-id"] > span').text();
-            IDs[1] = $( 'li[id="servis-id"] > span').text();
-        
-           addOrder(IDs);
+            if(!( $('li[id="fault-id"] > span').is(':empty') || $('li[id="servis-id"] > span').is(':empty') )){
+                IDs[0] = $('li[id="fault-id"] > span').text();
+                IDs[1] = $( 'li[id="servis-id"] > span').text();
+                addOrder(IDs);
+            }
         }) 
                                  
         $('button[class~="odd"]').click(function(){
-          var faultID=$('li[id="fault-id"] > span').text();
-          if(faultID){
+          if(!( $('li[id="fault-id"] > span').is(':empty'))){
+            var faultID=$('li[id="fault-id"] > span').text();
             oddOrder(faultID);
           }
         })
@@ -422,12 +426,9 @@
         });  
     
         $("#users").click(function(){
-        $("#contener").hide(300);
-        $("#adminPanel").css("display", "none");
-        $("#usersPanel").css("display", "block");
-        $("#backPanel").css("display", "block");
-             
-        $.ajax({
+        go("adminPanel","usersPanel", function(){
+            $("#backPanel").css("display", "block");    
+            $.ajax({
             url: "assets/php/users.php",
             data: "",
             dataType: "text",
@@ -439,33 +440,30 @@
                 })
                 $("#users-table").html(items);
             }    
-        });    
-            
-        $("#contener").fadeToggle();
+            });
+        });
         });  
  
         $("#bikes").click(function(){
-        $("#contener").hide(300);
-        $("#adminPanel").css("display", "none");
-        $("#bikesPanel").css("display", "block");
-        $("#backPanel").css("display", "block");
-            
-            $.ajax({
-            url: "assets/php/bikes.php",
-            data: "",
-            dataType: "text",
-            success: function(data){
-                $("#bikes-table").empty;
-                var items = [];
-                $.each(JSON.parse(data), function(id, json){
-                    items.push("<tr id'" + json.id_roweru +"'><td>#<span>" + json.id_roweru +"</span></td></tr>")
-                })
-                $("#bikes-table").html(items);
-            }    
+            go("adminPanel", "bikesPanel", function(){
+                $("#backPanel").css("display", "block");
+                loadBikes();
+            })
+        });
+        
+         $("#bikes-table").delegate('tr', 'click', function(clicked){
+            var bikeID=clicked.currentTarget.getAttribute("id");
+            bikeInfo(bikeID);
+        });
+        
+        $(document).on('click','#date1',function(clicked){
+            editDate("#date1");
+        });
+        
+        $(document).on('click','#date2',function(clicked){
+             editDate("#date2");
         });
             
-        $("#contener").fadeToggle();
-        });  
     </script>
       
       

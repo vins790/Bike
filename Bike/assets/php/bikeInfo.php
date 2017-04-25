@@ -1,7 +1,8 @@
 <?php
 include 'connect.php';
+$id = $_POST['bikeID'];
 $array = [];
-        if( $data = $mysqli->query("SELECT id_roweru, czy_sprawny, dataPrzegladu, dataWaznosci FROM rower") ) {
+        if( $data = $mysqli->query("SELECT czy_sprawny, id_zapiecia, dataPrzegladu, dataWaznosci FROM rower WHERE id_roweru = $id") ) {
             while ($row = $data->fetch_array(MYSQL_ASSOC)) { 
                 $array[] = $row;
             }
