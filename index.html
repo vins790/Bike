@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="pl_PL">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Wypożyczalnia Rowerów</title>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBomDlPDx5HREjVlJUpqMQndkLsbvQVdHQ&callback"></script>
+    
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link href='http://fonts.googleapis.com/css?family=Armata&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+</head>
+
+<body onload="map_initialize()">
+
+    <div class="col-md-6 col-md-offset-3" id="contener">
+        <div id="center">
+
+            <div id="loginPanel">
+
+                <div class="col-sm-4 col-sm-offset-4" id="bike">
+                    <i class="fa fa-bicycle fa-4x" aria-hidden="true"></i>
+                </div>
+
+                <div class="col-sm-12">
+                    <h1 id="header">Wypożyczalnia Rowerów Miejskich</h1>
+                </div>
+
+                <form class="form-horizontal" role="form">
+                    <div class="form-group" class="col-sm-12">
+                        <label for="inputLogin" class="col-sm-2 col-xs-2 control-label">Login</label>
+
+                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 ">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user-circle" aria-hidden="true" id="userIcon"></i></span>
+                                <input type="text" class="form-control" id="inputLogin" placeholder="Podaj login">
+                            </div>
+                        </div>
+                        <div class="col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputPass" class="col-xs-2 col-sm-2 col-md-2 col-lg-2  control-label">Hasło</label>
+
+                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 ">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-key fa-fw" id="keyIcon"></i></span>
+
+                                <input type="password" class="form-control" id="inputPass" placeholder="Podaj hasło">
+                            </div>
+                        </div>
+                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-4 col-xs-offset-2 col-sm-4 col-sm-offset-2 col-md-4 col-md-offset-2 col-lg-4 col-lg-offset-2" id="md">
+                            <label class="menuItem" id="submitButton">
+                                <i class="fa fa-chevron-right" aria-hidden="true"></i> Zaloguj
+                            </label>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"></div>
+                    </div>
+                </form>
+            </div>
+            <div id="adminPanel">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="col-xs-4 col-xs-offset-4 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4" id="bike">
+                        <i class="fa fa-bicycle fa-4x" aria-hidden="true"></i>
+                    </div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"></div>
+                </div>
+
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <h1>Admin Panel</h1>
+                </div>
+
+
+
+                <div id="menuBar" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="col-xs-8 col-xs-offset-2 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2" id="md">
+                        <label class="menuItem" id="stations"><i class="fa fa-map" aria-hidden="true"></i> Stacje</label>
+                    </div>
+
+                    <div class="col-xs-8 col-xs-offset-2 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2" id="md">
+                        <label class="menuItem" id="users"><i class="fa fa-users" aria-hidden="true"></i> Użytkownicy</label>
+                    </div>
+
+                    <div class="col-xs-8 col-xs-offset-2 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2" id="md">
+                        <label class="menuItem" id="bikes"><i class="fa fa-bicycle" aria-hidden="true"></i> Rowery</label>
+                    </div>
+
+                    <div class="col-xs-8 col-xs-offset-2 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2" id="md">
+                        <label class="menuItem" id="faulties"><i class="fa fa-wrench" aria-hidden="true"></i> Awarie</label>
+                    </div>
+
+                    <div class="col-xs-8 col-xs-offset-2 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2" id="md">
+                        <label class="menuItem" id="backButton"><i class="fa fa-power-off" aria-hidden="true"></i> Wyloguj</label>
+                    </div>
+                </div>
+            </div>
+            <div id="faultPanel">
+
+                <div class="col-md-12 col-lg-12">
+
+                    <!--PANEL SERWISANTA-->
+                    <div id="list" class="col-md-3 col-lg-3">
+                        <h4>Serwisant</h4>
+
+                        <ul class="list-group">
+                            <li class="list-group-item" id="servis-id"><strong>ID : </strong><span></span></li>
+                            <li class="list-group-item" id="name"><strong>Imię : </strong><span></span></li>
+                            <li class="list-group-item" id="surname"><strong>Nazwisko : </strong><span></span></li>
+                            <li class="list-group-item" id="mail"><strong>E-mail : </strong><span></span></li>
+                            <li class="list-group-item" id="faultAmount"><strong>Awarie : </strong><span></span></li>
+                        </ul>
+                    </div>
+
+
+                    <!--HEADER-->
+                    <div class="col-md-4 col-md-offset-1 col-lg-4 col-lg-offset-1">
+                        <div class="col-sm-4 col-sm-offset-4" id="bike">
+                            <i class="fa fa-bicycle fa-4x" aria-hidden="true"></i>
+                        </div>
+
+                        <div class="col-md-12 col-lg-12">
+                            <h1 id="header">System zarządzania awariami</h1>
+                        </div>
+
+                        <!--PRZYCISKI-->
+                        <div class="col-md-6 col-lg-6">
+                            <button id="button-default" type="button" class="btn btn-default btn-lg add"><i class="fa fa-angle-double-left" aria-hidden="true"></i></button>
+                        </div>
+
+                        <div class="col-md-6 col-lg-6">
+                            <button id="button-default" type="button" class="btn btn-default btn-lg odd"><i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
+                        </div>
+
+                    </div>
+
+                    <!-- PANEL AWARII-->
+                    <div id="list" class="col-md-3 col-md-offset-1 col-lg-3 col-lg-offset-1">
+                        <h4>Awaria Info</h4>
+
+                        <ul class="list-group">
+                            <li class="list-group-item" id="fault-id"><strong>ID awarii : </strong><span></span></li>
+                            <li class="list-group-item" id="bike-id"><strong>ID roweru : </strong><span></span></li>
+                            <li class="list-group-item" id="description"><strong></strong><span>Opis</span></li>
+                        </ul>
+                        <div id="delete" class="col-md-12 col-lg-12">Usuń</div>
+                        <div id="status" class="col-md-12 col-lg-12">Status</div>
+                        <div id="show-servis" class="col-md-12 col-lg-12">Serwisant</div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-12 col-lg-12">
+
+                    <!--LISTA SERWISANTÓW-->
+                    <div id="service-workers" class="col-md-3 col-lg-3">
+                        <div class="scrollbar-serviceList" id="scroll-style">
+                            <div class="force-overflow">
+                                <table class="table table-hover">
+                                    <tbody id="servisants-list">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- TABELA PRZYDZIELONYCH AWARII-->
+                    <div class="col-md-4 col-md-offset-1 col-lg-4 col-lg-offset-1">
+
+                        <div class="col-md-12 col-lg-12">
+                            <div class="scrollbar-orderTable" id="scroll-style">
+                                <div class="force-overflow">
+                                    <table class="table table-hover">
+                                        <tbody id="orders-list">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- TABELA AWARII-->
+                    <div class="col-md-3 col-md-offset-1 col-lg-3 col-lg-offset-1">
+                        <div class="scrollbar-faultiesTable" id="scroll-style">
+                            <div class="force-overflow">
+                                <table class="table table-hover">
+                                    <tbody id="faulties-list">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="usersPanel">
+
+                <div class="col-sm-4 col-sm-offset-4" id="bike">
+                    <i class="fa fa-bicycle fa-4x" aria-hidden="true"></i>
+                </div>
+
+                <div class="col-md-12 col-lg-12">
+                    <h1 id="header">System zarządzania użytkownikami</h1>
+                </div>
+
+                <div class="col-md-12 col-lg-12">
+                    <div class="col-md-12 col-lg-12">
+                        <div class="col-md-4 col-md-offset-2 col-lg-4 col-lg-offset-2">
+                            <h3>Użytkownicy</h3>
+                            <div class="form-group" class="col-md-12 col-lg-4 col-md-offset-2">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="inputSearch" placeholder="Podaj login">
+                                        <span class="input-group-btn">
+                                        <button type="button" class="btn btn-secondary search"><i class="fa fa-search" aria-hidden="true" id="userIcon"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-offset-6 col-sm-offset-6 col-md-offset-6 col-lg-offset-6"></div>
+                            </div>
+                            <div class="scrollbar-usersTable" id="scroll-style">
+                                <div class="force-overflow">
+                                    <table class="table table-hover">
+                                        <tbody id="users-table">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-4">
+                            <div class="col-md-12 col-lg-12" id="del">
+                            <div id="bike-list" > 
+                            <h3>Dane</h3>
+                        <ul class="list-group" id="userInfo">
+                            <li class="list-group-item" id="userName"><strong>Imię : </strong><span></span></li>
+                            <li class="list-group-item" id="userSurname"><strong>Nazwisko : </strong><span></span></li>
+                            <li class="list-group-item" id="userBalance"><strong>Saldo : </strong><span></span></li>
+                    </ul>
+                                </div>
+
+                                <div class="btn-group">
+                                    <button type="button" id="button" class="btn"><i class="fa fa-gears" aria-hidden="true"></i><span>  Opcje</span></button>
+                                    <button type="button" id="dropdown" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                        <span class="caret"></span>
+                                        </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a type="button" href="#" id="usun">Usuń</a></li>
+                                        <li><a type="button" href="#" id="nadaj">Nadaj prawo Admin'a</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div id="bikesTable" class="col-md-12 col-lg-12">
+                                <div id="bike-list" > 
+                                <h3 id="glowa">Rowery</h3>
+                        <ul class="list-group" id="userBikes">
+                            <li class="list-group-item"><strong>Brak rowerów</strong><span></span></li>
+                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                                            </div>
+            <div id="bikesPanel">
+                <div class="col-sm-4 col-sm-offset-4" id="bike">
+                    <i class="fa fa-bicycle fa-4x" aria-hidden="true"></i>
+                </div>
+
+                <div class="col-md-12 col-lg-12">
+                    <h1 id="header">System zarządzania Rowerami</h1>
+                </div>
+
+
+                <div class="col-md-6 col-lg-6">
+
+                    <h3>Lista rowerów</h3>
+                    <div class="scrollbar-bikePanel" id="scroll-style">
+                        <div class="force-overflow">
+                            <table class="table">
+                                <tbody id="bikes-table">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="bike-list" class="col-md-6 col-lg-6">
+                    <h3>Rower Info</h3>
+                    <ul class="list-group" id="bikeInfo">
+                        <li class="list-group-item">ID roweru : </li>
+                        <li class="list-group-item">Status : </li>
+                        <li class="list-group-item">Stan : </li>
+                        <li class="list-group-item">Data przeglądu : </li>
+                        <li class="list-group-item">Data następnego przeglądu : </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="stationsPanel">
+
+                <div class="col-sm-4 col-sm-offset-4" id="bike">
+                    <i class="fa fa-bicycle fa-4x" aria-hidden="true"></i>
+                </div>
+
+                <div class="col-md-12 col-lg-12">
+                    <h1 id="header">System zarządzania Stacjami</h1>
+                </div>
+
+                <div class="col-md-12" id="google_map" ></div>
+
+            </div>
+            <div id="backPanel">
+                <div class="col-md-2 col-md-offset-5">
+                    <button id="Panel-back" type="button" class="btn btn-default btn-lg"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i><span>  Powrót</span></button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="footer navbar-fixed-bottom">
+        <p class="copyright">Projekt zaliczeniowy PWR</p>
+    </footer>
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="assets/js/functions.js"></script>
+
+    <script>
+        //$(document).ajaxStart(function(){
+        // $('body > *').wrap('<div class="blur-all">'); 
+        //});
+
+        //$(document).ajaxStop(function(){
+        // $('body > *').unwrap(); 
+        //});
+
+        $("#contener").hide().fadeToggle(1500);
+
+
+        $("#submitButton").click(function(){
+        $("#contener").hide(300);
+        $("#loginPanel").css("display", "none");
+        $("#adminPanel").css("display", "block");
+        $("#stationsPanel").css("display", "none");
+        $("#contener").fadeToggle();
+        });  
+
+        $("#backButton").click(function() {
+            go("adminPanel", "loginPanel");
+        });
+
+        $("#faulties").click(function() {
+            go("adminPanel", "faultPanel", function() {
+                $("#backPanel").css("display", "block");
+                loadFaulties();
+                loadServisants();
+            });
+        });
+        
+        $("#stations").click(function() {
+            $("#contener").hide(300);
+            $("#adminPanel").css("display", "none");
+            $("#stationsPanel").css("display", "block");
+            $("#stationsPanel").css("visibility", "visible");
+            $("#backPanel").css("display", "block");
+            $("#contener").fadeToggle();
+        });
+
+        $('div[id="list"]').delegate('#delete', 'click', function() {
+            if (!($('li[id="fault-id"] > span').is(':empty'))) {
+                var faultID = $('li[id="fault-id"] > span').text();
+                $('li[id="fault-id"] > span').empty();
+                $('li[id="bike-id"] > span').empty();
+                $('li[id="description"] > span').empty();
+                deleteFault(faultID);
+                loadFaulties();
+            }
+        });
+
+        $('div[id="list"]').delegate('#show-servis', 'click', function() {
+            if (!($('li[id="fault-id"] > span').is(':empty'))) {
+                var faultID = $('li[id="fault-id"] > span').text();
+
+                $.ajax({
+                    type: "POST",
+                    url: "assets/php/orderOwner.php",
+                    data: {
+                        fault: faultID
+                    },
+                    success: function(data) {
+                        servisInfo(data);
+                        coutOrders(data);
+                        loadOrders(data);
+                    }
+                });
+            }
+        });
+
+        $("#faulties-list").delegate('tr', 'click', function(clicked) {
+            var faultID = clicked.currentTarget.getAttribute("id");
+            faultInfo(faultID);
+        });
+
+        $("#orders-list").delegate('tr', 'click', function(clicked) {
+            var faultID = clicked.currentTarget.getAttribute("id");
+            faultInfo(faultID);
+        });
+
+        $("#servisants-list").delegate('tr', 'click', function(clicked) {
+            var servisID = clicked.currentTarget.getAttribute("id");
+            servisInfo(servisID);
+            coutOrders(servisID);
+            loadOrders(servisID);
+        });
+
+        $('button[class~="add"]').click(function() {
+            var IDs = [];
+            if (!($('li[id="fault-id"] > span').is(':empty') || $('li[id="servis-id"] > span').is(':empty'))) {
+                IDs[0] = $('li[id="fault-id"] > span').text();
+                IDs[1] = $('li[id="servis-id"] > span').text();
+                addOrder(IDs);
+            }
+        })
+
+        $('button[class~="odd"]').click(function() {
+            if (!($('li[id="fault-id"] > span').is(':empty'))) {
+                var faultID = $('li[id="fault-id"] > span').text();
+                oddOrder(faultID);
+            }
+        })
+
+        $("#Panel-back").click(function() {
+            $("#contener").hide(300);
+            $("#faultPanel").css("display", "none");
+            $("#usersPanel").css("display", "none");
+            $("#bikesPanel").css("display", "none");
+            $("#adminPanel").css("display", "block");
+            $("#backPanel").css("display", "none");
+            $("#stationsPanel").css("display", "none");
+            $("#contener").fadeToggle();
+        });
+
+        $("#users").click(function() {
+            go("adminPanel", "usersPanel", function() {
+                $("#backPanel").css("display", "block");
+                loadUsers();
+            })
+        });
+        
+        $('button[class~="search"]').click(function() {
+            searchUsers();
+        });
+        
+        $("#users-table").delegate('tr', 'click', function(clicked) {
+            var userID = clicked.currentTarget.getAttribute("id");
+            userInfo(userID);
+            loadUserBikes(userID);
+
+        });
+        
+        $('#inputSearch').keyup(function(e) {
+            if(e.keyCode == 13){
+            searchUsers();
+            }
+         });
+        
+        $('#usun').click(function() {
+            if (!($('#userName').is(':empty'))) {
+                var a = document.getElementById("userName");
+                var Uname = userName.getAttribute("tag");
+                $('#userName').empty();
+                $('#userSurname').empty();
+                $('#userBalance').empty();
+                deleteUser(Uname);
+            }
+        });
+        
+        $('#nadaj').click(function() {
+            if (!($('#userName').is(':empty'))) {
+                var a = document.getElementById("userName");
+                var Uname = userName.getAttribute("tag");
+                adminUser(Uname);
+            }
+        });
+        
+        $("#bikesTable").delegate('button', 'click', function(clicked) {
+            var bikeID = clicked.currentTarget.getAttribute("id");
+            deleteUserBike(bikeID);
+        });
+
+        $("#bikes").click(function() {
+            go("adminPanel", "bikesPanel", function() {
+                $("#backPanel").css("display", "block");
+                loadBikes();
+            })
+        });
+
+        $("#bikes-table").delegate('tr', 'click', function(clicked) {
+            var bikeID = clicked.currentTarget.getAttribute("id");
+            bikeInfo(bikeID);
+        });
+
+        $(document).on('click', '#date1', function(clicked) {
+            editDate("#date1");
+        });
+
+        $(document).on('click', '#date2', function(clicked) {
+            editDate("#date2");
+        });
+
+    </script>
+
+
+</body>
+
+</html>
