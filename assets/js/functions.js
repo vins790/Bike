@@ -66,7 +66,11 @@
             
             $(document).on('click', '#' + divID + ' > i:nth-of-type(2)',function(){
                 $("#"+divID).empty().html('<span>' + currentDate + '</span>'+
+<<<<<<< HEAD
                 '<span style="float:right;" id="'+ clicked.substring(1) +'" tag="off"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>');
+=======
+                '<span style="float:right;" id="date2" tag="off"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>');
+>>>>>>> origin/Marcin
             });
             
             $(document).on('click', '#' + divID + ' > i:nth-of-type(1)',function(){
