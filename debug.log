@@ -1,0 +1,3 @@
+[0427/152250.778:ERROR:file_io_win.cc(163)] CreateFile C:\Program Files (x86)\settings.dat: Odmowa dostêpu. (0x5)
+[0427/152250.835:ERROR:registration_protocol_win.cc(83)] TransactNamedPipe: Potok zosta³ zakoñczony. (0x6D)
+[0427/152250.837:ERROR:file_io_win.cc(163)] CreateFile C:\Program Files (x86)\settings.dat: Odmowa dostêpu. (0x5)
