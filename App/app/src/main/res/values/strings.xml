@@ -16,4 +16,5 @@
     <string name="imie">Podaj Imię</string>
     <string name="nazwisko">Podaj Nazwisko</string>
     <string name="wroc">Wróć</string>
+    <string name="app_subtitle">Co chcesz zrobić?</string>
 </resources>

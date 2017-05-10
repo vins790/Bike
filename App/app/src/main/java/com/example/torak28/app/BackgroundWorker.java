@@ -1,8 +1,15 @@
 package com.example.torak28.app;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -120,19 +127,19 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
     @Override
     protected void onPreExecute() {
         alertDialog = new AlertDialog.Builder(context).create();
-        alertDialog.setTitle("Login Status");
+        alertDialog.setTitle("Status");
     }
 
     @Override
     protected void onPostExecute(String result) {
-        String post = "przed";
-        try {
-            post = new String(result.getBytes("UTF-8"), "UTF-8");
-        }catch (UnsupportedEncodingException e){
-            post = ":c";
+        System.out.print(result);
+        String post = result;
+        if(post.length() < 17){
+            context.startActivity(new Intent(context, MainApp.class));
+        }else{
+            alertDialog.setMessage(post);
+            alertDialog.show();
         }
-        alertDialog.setMessage(post);
-        alertDialog.show();
     }
 
     @Override
