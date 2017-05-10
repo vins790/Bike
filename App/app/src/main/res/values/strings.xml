@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Bike</string>
+    <string name="login_title">BIKE</string>
+    <string name="zaloguj_btn">Zaloguj</string>
+    <string name="anuluj_btn">Anuluj</string>
+    <string name="enter_message">Zalogouj się do aplikacji</string>
+    <string name="password_hint">Podaj hasło</string>
+    <string name="create_account_text">Nie masz konta? </string>
+    <string name="create_account"><u>Utwórz je tutaj</u></string>
+    <string name="login_hint">Wprowadź login</string>
+    <string name="register_title">Zaresjestruj się</string>
+    <string name="rejestruj_btn">Rejsestruj</string>
+    <string name="login">Podaj Login</string>
+    <string name="haslo">Podaj Hasło</string>
+    <string name="email">Podaj E-mail</string>
+    <string name="imie">Podaj Imię</string>
+    <string name="nazwisko">Podaj Nazwisko</string>
+    <string name="wroc">Wróć</string>
+    <string name="app_subtitle">Co chcesz zrobić?</string>
+    <string name="rent">Wypożycz Rower</string>
+    <string name="back">Oddaj Rower</string>
+    <string name="rent_subtitle">Co chcesz wypożyczyć?</string>
+    <string name="back_subtitle">Który chcesz oddać?</string>
+</resources>
