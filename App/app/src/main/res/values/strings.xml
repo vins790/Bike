@@ -5,7 +5,15 @@
     <string name="anuluj_btn">Anuluj</string>
     <string name="enter_message">Zalogouj się do aplikacji</string>
     <string name="password_hint">Podaj hasło</string>
-    <string name="create_account_text">Nie masz konta? Utwórz je tutaj</string>
-    <string name="recoll_password_string">Przypomnij hasło</string>
+    <string name="create_account_text">Nie masz konta? </string>
+    <string name="create_account"><u>Utwórz je tutaj</u></string>
     <string name="login_hint">Wprowadź login</string>
+    <string name="register_title">Zaresjestruj się</string>
+    <string name="rejestruj_btn">Rejsestruj</string>
+    <string name="login">Podaj Login</string>
+    <string name="haslo">Podaj Hasło</string>
+    <string name="email">Podaj E-mail</string>
+    <string name="imie">Podaj Imię</string>
+    <string name="nazwisko">Podaj Nazwisko</string>
+    <string name="wroc">Wróć</string>
 </resources>
