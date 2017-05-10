@@ -1,3 +1,6 @@
+ var mapCenter = new google.maps.LatLng(51.1000000, 17.0333300); 
+	            var map;
+
         function loadBikes(){
             $.ajax({
             url: "assets/php/bikes.php",
@@ -63,7 +66,7 @@
             
             $(document).on('click', '#' + divID + ' > i:nth-of-type(2)',function(){
                 $("#"+divID).empty().html('<span>' + currentDate + '</span>'+
-                '<span style="float:right;" id="date2" tag="off"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>');
+                '<span style="float:right;" id="'+clicked.substring(1)+'" tag="off"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>');
             });
             
             $(document).on('click', '#' + divID + ' > i:nth-of-type(1)',function(){
@@ -278,3 +281,277 @@
             }
             $("#contener").fadeToggle(300);
         };
+
+        function goM(from, to, func){
+            $("#contener").hide(300);
+            $("#"+to).css("display", "block");
+            $("#"+to).css("visibility", "visible");
+            $("#"+from).css("display", "none");
+            if(arguments.length ==3 ){
+             func();   
+            }
+            $("#contener").fadeToggle(300);
+        };
+
+        function loadUsers(){
+            $.ajax({
+            url: "assets/php/users.php",
+            data: "",
+            dataType: "text",
+            success: function(data){
+                $("#users-table").empty;
+                var items = [];
+                $.each(JSON.parse(data), function(id, json){
+                    items.push("<tr id='" + json.login +"'><td>#<span>" + json.login +"</span></td></tr>")
+                })
+                $("#users-table").html(items);
+            },
+            error: function(){}
+            });
+        };
+
+        function searchUsers(){
+            
+            var log = $("#inputSearch").val();
+            
+            if(log!=""){
+            $.ajax({
+            type: "POST",
+            url: "assets/php/usersSearch.php",
+            data: "log="+log,
+            dataType: "text",
+            success: function(data){
+                $("#users-table").empty;
+                var items = [];
+                $.each(JSON.parse(data), function(id, json){
+                    items.push("<tr id='" + json.login +"'><td>#<span>" + json.login +"</span></td></tr>")
+                })
+                $("#users-table").html(items);
+            },
+            error: function(){}
+            });
+            }
+            else{
+                loadUsers();
+            }
+        };
+
+        function userInfo(u_id){
+            $.ajax({
+            type: "POST",
+            url: "assets/php/userInfo.php",
+            data: {userID : u_id},
+            dataType: "text",
+            success: function(data){
+                $("#userInfo").empty();
+                var items = []; 
+                $.each(JSON.parse(data), function(id, json) {  
+               items.push('<li class="list-group-item" tag="'+ u_id +'" id="userName">Imię : <span>'+json.imie+'</span></li>'+
+                         '<li class="list-group-item" id="userSurname">Nazwisko : <span>'+json.nazwisko+'</span></li>'+
+                         '<li class="list-group-item" id="userBalance">Saldo : <span>'+json.saldo+'</span></li>');
+               $("#userInfo").html(items);
+                });
+                },
+            error: function(){}
+        });
+        };
+
+        function deleteUser(name){
+        $.ajax({
+            type: "POST",
+            url: "assets/php/userDelete.php",
+            data: {Uname: name},
+            dataType: "text",
+            success: function(data){
+                loadUsers()
+            },
+            error: function(){}
+        });}
+
+        function adminUser(name){
+        $.ajax({
+            type: "POST",
+            url: "assets/php/userAdmin.php",
+            data: {Uname: name},
+            dataType: "text",
+            success: function(){
+            alert("Nadano prawo Admina!");
+            },
+            error: function(){}
+        });}
+
+        function loadUserBikes(u_id){
+            $.ajax({
+            type: "POST",
+            url: "assets/php/userBikes.php",
+            data: {userID : u_id},
+            dataType: "text",
+            success: function(data){
+                $("#userBikes").empty();
+                var items = []; 
+                $.each(JSON.parse(data), function(id, json) {  
+               items.push('<li class="list-group-item" id=' + json.id_rower +'">#<span>' + json.id_rower +'</span><button type="button" style=" background-color: rgba(0, 0, 0, 0.8); margin-left: 30px" id='+ json.id_rower +' class="btn">Zwróć</button></li>');
+               $("#userBikes").html(items);
+                });
+                if($('#userBikes').is(':empty'))
+                    {
+                    document.getElementById("userBikes").innerHTML = '<li class="list-group-item"><strong>Brak rowerów</strong><span></span></li>';
+                    }
+                },
+            error: function(){}
+        });
+        };
+
+        function deleteUserBike(b_id){
+        $.ajax({
+            type: "POST",
+            url: "assets/php/userBikeDelete.php",
+            data: {bikeID: b_id},
+            dataType: "text",
+            success: function(data){
+            loadUserBikes(data);
+            },
+            error: function(){}
+        });}
+
+	function map_initialize()
+	{
+			var googleMapOptions = 
+			{ 
+				center: mapCenter,
+				zoom: 12, 
+				zoomControlOptions: {
+				style: google.maps.ZoomControlStyle.SMALL
+			},
+				scaleControl: true,
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+			};
+		
+		   	map = new google.maps.Map(document.getElementById("google_map"), googleMapOptions);			
+			
+			$.get("assets/php/mapProcess.php", function (data) {
+				$(data).find("marker").each(function () {
+					  var name 		= $(this).attr('name');
+					  var address 	= '<p style="color: black;">'+ $(this).attr('address') +'</p>';
+					  var point 	= new google.maps.LatLng(parseFloat($(this).attr('lat')),parseFloat($(this).attr('lng')));
+					  create_marker(point, name, address, false, false, false);
+				});
+			});	
+			
+
+			google.maps.event.addListener(map, 'rightclick', function(event) {
+
+				var EditForm = '<p><div class="marker-edit">'+
+				'<form action="ajax-save.php" method="POST" name="SaveMarker" id="SaveMarker">'+
+				'<label for="pName"><span id="black">Nazwa :</span><input type="text" name="pName" id="black" class="save-name" placeholder="Podaj tytuł" maxlength="40" /></label>'+
+				'<label for="pDesc"><span id="black">Opis :</span><textarea name="pDesc" id="black" class="save-desc" placeholder="Wpisz adres" maxlength="150"></textarea></label>'+
+				'</div></p><button name="save-marker" class="save-marker">Zapisz miejsce</button>';
+
+				create_marker(event.latLng, 'Stacja', EditForm, true, true, true);
+			});
+										
+	}
+	
+
+	function create_marker(MapPos, MapTitle, MapDesc,  InfoOpenDefault, DragAble, Removable)
+	{	  	  		  
+		var marker = new google.maps.Marker({
+			position: MapPos,
+			map: map,
+			draggable:DragAble,
+			animation: google.maps.Animation.DROP,
+		});
+
+		var contentString = $('<div class="marker-info-win">'+
+		'<div class="marker-inner-win"><span class="info-content">'+
+		'<h1 class="marker-heading">'+MapTitle+'</h1>'+
+		MapDesc+ 
+		'</span><button name="remove-marker" class="remove-marker">Usuń miejsce</button>'+
+		'</div></div>');	
+
+		
+
+		var infowindow = new google.maps.InfoWindow();
+
+		infowindow.setContent(contentString[0]);
+
+
+		var removeBtn 	= contentString.find('button.remove-marker')[0];
+		var saveBtn 	= contentString.find('button.save-marker')[0];
+
+		google.maps.event.addDomListener(removeBtn, "click", function(event) {
+			remove_marker(marker);
+		});
+		
+		if(typeof saveBtn !== 'undefined') 
+		{
+
+			google.maps.event.addDomListener(saveBtn, "click", function(event) {
+				var mReplace = contentString.find('span.info-content'); 
+				var mName = contentString.find('input.save-name')[0].value; 
+				var mDesc  = contentString.find('textarea.save-desc')[0].value; 
+				
+				if(mName =='' || mDesc =='')
+				{
+					alert("Podaj nazwę i opis!");
+				}else{
+					save_marker(marker, mName, mDesc, mReplace);
+				}
+			});
+		}
+		
+				 
+		google.maps.event.addListener(marker, 'click', function() {
+				infowindow.open(map,marker); 
+	    });
+		  
+		if(InfoOpenDefault) 
+		{
+		  infowindow.open(map,marker);
+		}
+	}
+	
+	
+	function remove_marker(Marker)
+	{
+		
+
+		if(Marker.getDraggable()) 
+		{
+			Marker.setMap(null); 
+		}
+		else
+		{
+			var mLatLang = Marker.getPosition().toUrlValue(); 
+			var myData = {del : 'true', latlang : mLatLang};
+			$.ajax({
+			  type: "POST",
+			  url: "assets/php/mapProcess.php",
+			  data: myData,
+			  success:function(data){
+					Marker.setMap(null); 
+					alert(data);
+				},
+				error:function(){}
+			});
+		}
+
+	}
+	
+	
+	function save_marker(Marker, mName, mAddress, replaceWin)
+	{
+		var mLatLang = Marker.getPosition().toUrlValue(); 
+		var myData = {name : mName, address : mAddress, latlang : mLatLang}; 
+		console.log(replaceWin);		
+		$.ajax({
+		  type: "POST",
+		  url: "assets/php/mapProcess.php",
+		  data: myData,
+		  success:function(data){
+				replaceWin.html(data); 
+				Marker.setDraggable(false);
+            },
+            error:function(){}
+		});
+	};

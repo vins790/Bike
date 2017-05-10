@@ -52,6 +52,11 @@ footer {
     display: none;
 }
 
+#stationsPanel {
+    visibility: hidden;
+    height: 0px;
+}
+
 #backPanel {
     display: none;
 }
@@ -123,6 +128,16 @@ span {
 	color: #FFFFFF;
 }
 
+#black
+{
+    color: black;
+}
+
+#gray
+{
+    color: rgba(211, 211, 211, 0.8);
+}
+
 #list {
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 4px;
@@ -138,6 +153,9 @@ span {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
+#user-list ul li{
+    background-color: rgba(0, 0, 0, 0.5);
+}
 
 #Panel-back {
     margin-top: 8px;
@@ -236,6 +254,8 @@ span {
 }
 
 .scrollbar-usersTable {
+    position: relative;
+    margin-top: 60px;
     max-height: 450px;
 	overflow-y: scroll;
 }
@@ -300,4 +320,98 @@ span {
 
 .alignright {
 	float: right;
+}
+
+
+
+
+h1.heading {
+    padding:0px;
+    margin: 0px 0px 10px 0px;
+    text-align:center;
+    font: 18px Georgia, "Times New Roman", Times, serif;
+}
+
+#google_map {
+    width:1000px;
+    height:600px;
+    margin-top:0px;
+    margin-left:auto;
+    margin-right:auto;
+    border-radius: 10px;
+}
+
+.marker-edit label {
+    display:block;
+    margin-bottom: 5px;
+}
+
+.marker-edit label span {
+    width: 60px;
+    float: left;
+}
+
+.marker-edit label input, .marker-edit label select {
+    height: 24px;
+}
+
+.marker-edit label textarea {
+    height: 60px;
+}
+
+.marker-edit label input, .marker-edit label select, .marker-edit label textarea {
+    width: 60%;
+    margin:0px;
+    padding-left: 5px;
+    border: 1px solid #DDD;
+    border-radius: 10px;
+} 
+
+h1.marker-heading {
+    color: #585858;
+    margin: 0px;
+    padding: 0px;
+    font: 18px "Trebuchet MS", Arial;
+    border-bottom: 1px dotted #D8D8D8;
+}
+
+div.marker-info-win {
+    max-width: 250px;
+}
+
+div.marker-info-win p {
+    padding: 0px;
+    margin: 10px 0px 10px 0;
+}
+
+div.marker-inner-win {
+    padding: 5px;
+}
+
+button.save-marker {
+    border: none;background: rgba(0, 0, 0, 0);
+    color: #00F;padding: 0px;text-decoration: underline;
+    margin-right: 30px;
+    margin-left: 10px;
+    cursor: pointer
+}
+
+button.remove-marker {
+    border: none;background: rgba(0, 0, 0, 0);
+    color: #00F;
+    padding: 0px;
+    text-decoration: underline;
+    cursor: pointer
+}
+
+div.gm-style-iw {
+    overflow: hidden;
+}
+
+#inspectionDate input {
+    color: black;
+}
+
+#expireDate input {
+    color: black;
 }

@@ -1,7 +1,8 @@
 <?php
 include 'connect.php';
-$array = array();
-        if( $data = $mysqli->query("SELECT login FROM konto ORDER BY login") ) {
+$id = $_POST['userID'];
+$array = [];
+        if( $data = $mysqli->query("SELECT imie, nazwisko, saldo FROM konto inner join uzytkownik WHERE konto.login = '$id' and uzytkownik.login = '$id'") ) {
             while ($row = $data->fetch_array(MYSQL_ASSOC)) { 
                 $array[] = $row;
             }
