@@ -19,7 +19,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".Register" />
-        <activity android:name=".MainApp"></activity>
+        <activity android:name=".MainApp" />
+        <activity android:name=".Rent" />
+        <activity android:name=".Back"></activity>
     </application>
 
 </manifest>

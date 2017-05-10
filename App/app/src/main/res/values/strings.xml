@@ -17,4 +17,8 @@
     <string name="nazwisko">Podaj Nazwisko</string>
     <string name="wroc">Wróć</string>
     <string name="app_subtitle">Co chcesz zrobić?</string>
+    <string name="rent">Wypożycz Rower</string>
+    <string name="back">Oddaj Rower</string>
+    <string name="rent_subtitle">Co chcesz wypożyczyć?</string>
+    <string name="back_subtitle">Który chcesz oddać?</string>
 </resources>

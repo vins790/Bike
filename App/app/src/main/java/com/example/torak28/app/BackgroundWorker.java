@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -32,6 +33,8 @@ import java.nio.charset.Charset;
 public class BackgroundWorker extends AsyncTask<String,Void,String> {
     Context context;
     AlertDialog alertDialog;
+    public String UserName;
+    public String Baner = "";
     BackgroundWorker (Context ctx) {
         context = ctx;
     }
@@ -40,8 +43,10 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
         String type = params[0];
         String login_url = "http://erower.stronazen.pl/login.php";
         String register_url = "http://erower.stronazen.pl/register.php";
+        String saldo_url = "http://erower.stronazen.pl/saldo.php";
         if(type.equals("login")) {
             try {
+                UserName = params[1];
                 String user_name = params[1];
                 String password = params[2];
                 URL url = new URL(login_url);
@@ -132,13 +137,14 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onPostExecute(String result) {
-        System.out.print(result);
         String post = result;
-        if(post.length() < 17){
-            context.startActivity(new Intent(context, MainApp.class));
-        }else{
-            alertDialog.setMessage(post);
-            alertDialog.show();
+        if(post.length() < 17 && post.length() > 10){
+            Intent intent = new Intent(context, MainApp.class);
+            intent.putExtra("UserName", UserName);
+            context.startActivity(intent);
+        } else{
+                alertDialog.setMessage(post);
+                alertDialog.show();
         }
     }
 
