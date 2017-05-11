@@ -34,14 +34,6 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
-    public void create_account(View view) {
-        //TODO tworzenie konta
-    }
-
-    public void recoll_password(View view) {
-        //TODO przypominanie hasła
-    }
-
     public void OpenReg(View view){
         startActivity(new Intent(this, Register.class));
     }

@@ -21,4 +21,7 @@
     <string name="back">Oddaj Rower</string>
     <string name="rent_subtitle">Co chcesz wypożyczyć?</string>
     <string name="back_subtitle">Który chcesz oddać?</string>
+    <string name="stacja">Stacja: </string>
+    <string name="rower">Rower: </string>
+    <string name="wypozycz">Wypozycz</string>
 </resources>
