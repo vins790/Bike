@@ -2,6 +2,7 @@ package com.example.torak28.app;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 public class Back extends AppCompatActivity {
 
@@ -14,5 +15,9 @@ public class Back extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         UserName = bundle.getString("UserName");
+    }
+    //Po nacisnieciu przyciku Oddaj Rower
+    public void Oddaj(View view){
+
     }
 }
