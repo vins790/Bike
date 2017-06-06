@@ -49,6 +49,9 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
         String saldo_url = "http://erower.stronazen.pl/saldo.php";
         String stacja_url = "http://erower.stronazen.pl/stacje.php";
         String rowery_url = "http://erower.stronazen.pl/rowery.php";
+        String rent_url = "http://erower.stronazen.pl/rent.php";
+        String oddaj_url = "http://erower.stronazen.pl/rowerOddaj.php";
+        String back_url = "http://erower.stronazen.pl/return.php";
         if(type.equals("login")) {
             try {
                 UserName = params[1];
@@ -196,7 +199,50 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }else if(type.equals("rowery")){
+        }else if(type.equals("rent")){
+            try {
+                String login = params[1];
+                String id_roweru = params[2];
+                String id_stacji = params[3];
+
+                if(login.isEmpty() || id_roweru.isEmpty() || id_stacji.isEmpty()){
+                    String result="Nie wybrałeś czegoś!";
+                    return result;
+                }else{
+                    try{
+                        URL url = new URL(rent_url);
+                        HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                        httpURLConnection.setRequestMethod("POST");
+                        httpURLConnection.setDoOutput(true);
+                        httpURLConnection.setDoInput(true);
+                        OutputStream outputStream = httpURLConnection.getOutputStream();
+                        BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                        String post_data = URLEncoder.encode("login","UTF-8")+"="+URLEncoder.encode(login,"UTF-8")+"&"
+                                + URLEncoder.encode("id_roweru","UTF-8")+"="+URLEncoder.encode(id_roweru,"UTF-8")+"&"
+                                + URLEncoder.encode("id_stacji","UTF-8")+"="+URLEncoder.encode(id_stacji,"UTF-8");
+                        bufferedWriter.write(post_data);
+                        bufferedWriter.flush();
+                        bufferedWriter.close();
+                        outputStream.close();
+                        InputStream inputStream = httpURLConnection.getInputStream();
+                        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"UTF-8"));
+                        String result="";
+                        String line="";
+                        while((line = bufferedReader.readLine())!= null) {
+                            result += line;
+                        }
+                        bufferedReader.close();
+                        inputStream.close();
+                        httpURLConnection.disconnect();
+                        return result;
+                    }catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else if(type.equals("rowery")){
             try {
                 String id_stacji = params[1];
                 try {
@@ -208,6 +254,76 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                     OutputStream outputStream = httpURLConnection.getOutputStream();
                     BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
                     String post_data = URLEncoder.encode("id_stacji", "UTF-8") + "=" + URLEncoder.encode(id_stacji, "UTF-8");
+                    bufferedWriter.write(post_data);
+                    bufferedWriter.flush();
+                    bufferedWriter.close();
+                    outputStream.close();
+                    InputStream inputStream = httpURLConnection.getInputStream();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+                    String result = "";
+                    String line = "";
+                    while ((line = bufferedReader.readLine()) != null) {
+                        result += line;
+                    }
+                    bufferedReader.close();
+                    inputStream.close();
+                    httpURLConnection.disconnect();
+                    return result;
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else if(type.equals("oddaj")) {
+            try {
+                String login = params[1];
+                try {
+                    URL url = new URL(oddaj_url);
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                    httpURLConnection.setRequestMethod("POST");
+                    httpURLConnection.setDoOutput(true);
+                    httpURLConnection.setDoInput(true);
+                    OutputStream outputStream = httpURLConnection.getOutputStream();
+                    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                    String post_data = URLEncoder.encode("login", "UTF-8") + "=" + URLEncoder.encode(login, "UTF-8");
+                    bufferedWriter.write(post_data);
+                    bufferedWriter.flush();
+                    bufferedWriter.close();
+                    outputStream.close();
+                    InputStream inputStream = httpURLConnection.getInputStream();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+                    String result = "";
+                    String line = "";
+                    while ((line = bufferedReader.readLine()) != null) {
+                        result += line;
+                    }
+                    bufferedReader.close();
+                    inputStream.close();
+                    httpURLConnection.disconnect();
+                    return result;
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else if(type.equals("back")){
+            try {
+                String login = params[1];
+                String id_roweru = params[2];
+                String id_stacji = params[3];
+                try {
+                    URL url = new URL(back_url);
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                    httpURLConnection.setRequestMethod("POST");
+                    httpURLConnection.setDoOutput(true);
+                    httpURLConnection.setDoInput(true);
+                    OutputStream outputStream = httpURLConnection.getOutputStream();
+                    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                    String post_data = URLEncoder.encode("login","UTF-8")+"="+URLEncoder.encode(login,"UTF-8")+"&"
+                            + URLEncoder.encode("id_roweru","UTF-8")+"="+URLEncoder.encode(id_roweru,"UTF-8")+"&"
+                            + URLEncoder.encode("id_stacji","UTF-8")+"="+URLEncoder.encode(id_stacji,"UTF-8");
                     bufferedWriter.write(post_data);
                     bufferedWriter.flush();
                     bufferedWriter.close();
@@ -258,6 +374,8 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
             alertDialog.setMessage("Niestety nie ma rowerow na tej stacji");
             alertDialog.show();
         }else if(post.length() < 10){
+            //A to jak co to jest Saldo xd
+        }else if(first == 'U'){
             //A to jak co to jest Saldo xd
         }else{
             alertDialog.setMessage(post);

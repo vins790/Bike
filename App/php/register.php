@@ -13,6 +13,8 @@ if ($conn->query($mysql_qry) === TRUE) {
 	if ($conn->query($mysql_qry) === TRUE) {
 		$mysql_qry = "SET FOREIGN_KEY_CHECKS=1;";
 		if($conn->query($mysql_qry) === TRUE){
+			$zapytanie3 = "INSERT INTO uzytkownik(login, saldo, wypozyczenia) VALUES('$login', 0, 0);";		
+			mysqli_query($conn, $zapytanie3);
 			echo "Udalo sie!";
 		}else{
 			//echo "Error: " . $mysql_qry . "<br>" . $conn->error;

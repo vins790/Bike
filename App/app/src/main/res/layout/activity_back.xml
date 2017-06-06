@@ -71,15 +71,6 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
-    <Spinner
-        android:id="@+id/spinner2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_below="@+id/bike_title"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
     <Button
         android:id="@+id/button5"
         android:layout_width="wrap_content"
@@ -89,4 +80,17 @@
         android:layout_marginBottom="33dp"
         android:text="@string/back"
         android:onClick="Oddaj"/>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bike_title"
+        android:layout_marginTop="17dp"
+        android:gravity="center"
+        android:text="xd"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

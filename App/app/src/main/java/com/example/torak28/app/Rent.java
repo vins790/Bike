@@ -1,5 +1,7 @@
 package com.example.torak28.app;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,21 +17,24 @@ public class Rent extends AppCompatActivity implements AdapterView.OnItemSelecte
 
     private Spinner spinner;
     private Spinner spinner2;
+    AlertDialog alertDialog;
 
     String output;
     String output2;
+    String output3;
     ArrayList<String> stacje;
     ArrayList<String> rowery;
 
     String id_stacji;
     String id_roweru;
     String UserName;
-    BackgroundWorker BackgroundWorker = new BackgroundWorker(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rent);
+
+        BackgroundWorker backgroundWorker = new BackgroundWorker(this);
 
         Bundle bundle = getIntent().getExtras();
         UserName = bundle.getString("UserName");
@@ -43,7 +48,7 @@ public class Rent extends AppCompatActivity implements AdapterView.OnItemSelecte
             //Na początku używałem jakiś bibliotek do ogarnięcia tego ale zajmowało to miljon razy więcej czasu
             //No i robiłem to w osobny AsyncTasku co nie pomaga wcale w "Niezawodności"
             //A to się całkiem sprawdza
-            output = BackgroundWorker.execute(type, UserName).get();
+            output = backgroundWorker.execute(type, UserName).get();
             output = output.replace("id_stacji", "");
             output = output.replace("\"\"", "");
             output = output.replace("\"", "");
@@ -66,8 +71,24 @@ public class Rent extends AppCompatActivity implements AdapterView.OnItemSelecte
     //Po nacisnieciu przyciku Wypozycz
     public void Wypozycz(View view){
         //Klikniecie wypozyczenia. Wypisuje dla łatwiejszego debugowania
-        System.out.print(id_stacji);
-        System.out.print(id_roweru);
+        BackgroundWorker backgroundWorker = new BackgroundWorker(this);
+        try {
+            output3 = backgroundWorker.execute("rent", UserName, id_roweru, id_stacji).get();
+            alertDialog = new AlertDialog.Builder(this).create();
+            alertDialog.setTitle("Status");
+            alertDialog.setMessage(output3);
+            alertDialog.show();
+            alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener()
+            {
+                @Override
+                public void onCancel(DialogInterface dialog)
+                {
+                    finish();
+                }
+            });
+        }catch (Exception e){
+
+        }
     }
 
     @Override
