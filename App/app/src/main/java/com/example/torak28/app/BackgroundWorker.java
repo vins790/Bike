@@ -257,7 +257,7 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
             //A to jak co to jest jak jest 0 rowerow
             alertDialog.setMessage("Niestety nie ma rowerow na tej stacji");
             alertDialog.show();
-        }else if(post.length() < 4){
+        }else if(post.length() < 10){
             //A to jak co to jest Saldo xd
         }else{
             alertDialog.setMessage(post);
