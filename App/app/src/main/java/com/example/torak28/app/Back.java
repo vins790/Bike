@@ -71,7 +71,8 @@ public class Back extends AppCompatActivity implements AdapterView.OnItemSelecte
         //ZAPYTANIE ODDANIA
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
         try {
-            output3 = backgroundWorker.execute("back", UserName, id_roweru, id_stacji).get();
+            String id_roweru2 = id_roweru.substring(1,id_roweru.length());
+            output3 = backgroundWorker.execute("back", UserName, id_roweru2, id_stacji).get();
             alertDialog = new AlertDialog.Builder(this).create();
             alertDialog.setTitle("Status");
             alertDialog.setMessage(output3);

@@ -31,15 +31,32 @@ public class MainApp extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        String type = "saldo";
+        BackgroundWorker BackgroundWorker = new BackgroundWorker(this);
+        try {
+            output = BackgroundWorker.execute(type, UserName).get();
+            String display = "Saldo: " + output;
+            TextView Baner = (TextView) findViewById(R.id.Saldo);
+            Baner.setText(display);
+        }catch(Exception e){
+            //nic
+        }
+    }
+
     public void Rent(View view){
         Intent intent = new Intent(this, Rent.class);
         intent.putExtra("UserName", UserName);
+        intent.putExtra("Saldo", output);
         startActivity(intent);
     }
 
     public void Back(View view){
         Intent intent = new Intent(this, Back.class);
         intent.putExtra("UserName", UserName);
+        intent.putExtra("Saldo", output);
         startActivity(intent);
     }
 }

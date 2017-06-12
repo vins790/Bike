@@ -28,6 +28,7 @@ public class Rent extends AppCompatActivity implements AdapterView.OnItemSelecte
     String id_stacji;
     String id_roweru;
     String UserName;
+    String Saldo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,7 @@ public class Rent extends AppCompatActivity implements AdapterView.OnItemSelecte
 
         Bundle bundle = getIntent().getExtras();
         UserName = bundle.getString("UserName");
+        Saldo = bundle.getString("Saldo");
 
         spinner = (Spinner) findViewById(R.id.spinner);
         spinner2 = (Spinner)findViewById(R.id.spinner2);
@@ -66,17 +68,32 @@ public class Rent extends AppCompatActivity implements AdapterView.OnItemSelecte
         }catch (Exception e){
             //nic
         }
+
     }
 
     //Po nacisnieciu przyciku Wypozycz
     public void Wypozycz(View view){
         //Klikniecie wypozyczenia. Wypisuje dla łatwiejszego debugowania
-        BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-        try {
-            output3 = backgroundWorker.execute("rent", UserName, id_roweru, id_stacji).get();
+        if(jestHajs()) {
+            BackgroundWorker backgroundWorker = new BackgroundWorker(this);
+            try {
+                output3 = backgroundWorker.execute("rent", UserName, id_roweru, id_stacji).get();
+                alertDialog = new AlertDialog.Builder(this).create();
+                alertDialog.setTitle("Status");
+                alertDialog.setMessage(output3);
+                alertDialog.show();
+                alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        finish();
+                    }
+                });
+            } catch (Exception e) {
+            }
+        }else{
             alertDialog = new AlertDialog.Builder(this).create();
-            alertDialog.setTitle("Status");
-            alertDialog.setMessage(output3);
+            alertDialog.setTitle("Hej!");
+            alertDialog.setMessage("Niestety nie masz wystarczającej wartości Salda i nie możesz wypożyczać rowerów. Doładuj konto i wróć do Nas!");
             alertDialog.show();
             alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener()
             {
@@ -86,9 +103,23 @@ public class Rent extends AppCompatActivity implements AdapterView.OnItemSelecte
                     finish();
                 }
             });
+        }
+    }
+
+    public boolean jestHajs(){
+        boolean jest = false;
+        try {
+            String Saldo2 = Saldo.substring(1, Saldo.length());
+            int saldo = Integer.parseInt(Saldo2);
+            if(saldo >= 10)
+                jest = true;
+            else
+                jest = false;
+
         }catch (Exception e){
 
         }
+        return jest;
     }
 
     @Override
