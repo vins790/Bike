@@ -23,7 +23,8 @@
         <activity android:name=".Register" />
         <activity android:name=".MainApp" />
         <activity android:name=".Rent" />
-        <activity android:name=".Back"></activity>
+        <activity android:name=".Back" />
+        <activity android:name=".Saldo"></activity>
     </application>
 
 </manifest>

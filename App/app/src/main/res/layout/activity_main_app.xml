@@ -72,4 +72,17 @@
         android:layout_alignEnd="@+id/button3"
         android:onClick="Back"/>
 
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="27dp"
+        android:text="@string/SaldoZarzadz"
+        android:layout_below="@+id/button4"
+        android:layout_alignLeft="@+id/button4"
+        android:layout_alignStart="@+id/button4"
+        android:layout_alignRight="@+id/button4"
+        android:layout_alignEnd="@+id/button4"
+        android:onClick="SaldoZarzadz"/>
+
 </RelativeLayout>

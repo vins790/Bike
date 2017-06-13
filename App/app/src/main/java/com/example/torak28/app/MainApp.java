@@ -59,4 +59,10 @@ public class MainApp extends AppCompatActivity {
         intent.putExtra("Saldo", output);
         startActivity(intent);
     }
+
+    public void SaldoZarzadz(View view){
+        Intent intent = new Intent(this, Saldo.class);
+        intent.putExtra("UserName", UserName);
+        startActivity(intent);
+    }
 }

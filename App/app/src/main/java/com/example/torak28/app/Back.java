@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -19,15 +21,13 @@ public class Back extends AppCompatActivity implements AdapterView.OnItemSelecte
     private TextView textview;
     AlertDialog alertDialog;
 
-    String output;
-    String output2;
-    String output3;
+    String output, output2, output3, output4;
     ArrayList<String> stacje;
-    ArrayList<String> rowery;
 
-    String id_stacji;
-    String id_roweru;
-    String UserName;
+    String id_stacji, id_roweru, UserName;
+
+    private EditText Opis;
+    private CheckBox Awaria;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +41,8 @@ public class Back extends AppCompatActivity implements AdapterView.OnItemSelecte
 
         spinner = (Spinner) findViewById(R.id.spinner);
         textview = (TextView) findViewById(R.id.textView3);
+        Opis = (EditText) findViewById(R.id.backOpis);
+        Awaria = (CheckBox) findViewById(R.id.checkBox);
 
         String type = "stacje";
         try {
@@ -71,20 +73,43 @@ public class Back extends AppCompatActivity implements AdapterView.OnItemSelecte
         //ZAPYTANIE ODDANIA
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
         try {
-            String id_roweru2 = id_roweru.substring(1,id_roweru.length());
-            output3 = backgroundWorker.execute("back", UserName, id_roweru2, id_stacji).get();
-            alertDialog = new AlertDialog.Builder(this).create();
-            alertDialog.setTitle("Status");
-            alertDialog.setMessage(output3);
-            alertDialog.show();
-            alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener()
-            {
-                @Override
-                public void onCancel(DialogInterface dialog)
-                {
-                    finish();
+            boolean awaria = Awaria.isChecked();
+            String opis = Opis.getText().toString();
+            String id_roweru2 = id_roweru.substring(1, id_roweru.length());
+            if(!awaria) {
+                output3 = backgroundWorker.execute("back", UserName, id_roweru2, id_stacji).get();
+                alertDialog = new AlertDialog.Builder(this).create();
+                alertDialog.setTitle("Status");
+                alertDialog.setMessage(output3);
+                alertDialog.show();
+                alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        finish();
+                    }
+                });
+            }else{
+                if(Opis.getText().toString().equals("")){
+                    output = "Pozostawiłeś pole puste!";
+                    alertDialog = new AlertDialog.Builder(this).create();
+                    alertDialog.setTitle("Status");
+                    alertDialog.setMessage(output);
+                    alertDialog.show();
+                }else{
+                    //Oddanie z Awaria
+                    output4 = backgroundWorker.execute("oddajAwaria", UserName, id_roweru2, id_stacji, opis).get();
+                    alertDialog = new AlertDialog.Builder(this).create();
+                    alertDialog.setTitle("Status");
+                    alertDialog.setMessage(output4);
+                    alertDialog.show();
+                    alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            finish();
+                        }
+                    });
                 }
-            });
+            }
         }catch (Exception e){
 
         }

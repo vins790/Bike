@@ -52,7 +52,6 @@
         android:id="@+id/spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="19dp"
         android:layout_below="@+id/rent_title"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -64,7 +63,6 @@
         android:id = "@+id/bike_title"
         android:textSize = "25dp"
         android:gravity="center"
-        android:layout_marginTop="18dp"
         android:layout_below="@+id/spinner"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -85,12 +83,39 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/bike_title"
-        android:layout_marginTop="17dp"
         android:gravity="center"
         android:text="xd"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/bike_title"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Awaria"
+        android:layout_below="@+id/textView3"
+        android:layout_alignLeft="@+id/textview"
+        android:layout_alignStart="@+id/textview"
+        android:layout_marginTop="15dp" />
+
+
+    <EditText
+        android:id="@+id/backOpis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:inputType="text"
+        android:hint="Wprowadź Opis Awarii"
+        android:maxLines="1"
+        android:textAlignment="center"
+        android:layout_below="@+id/checkBox"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
 </RelativeLayout>

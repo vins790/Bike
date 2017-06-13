@@ -52,6 +52,8 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
         String rent_url = "http://erower.stronazen.pl/rent.php";
         String oddaj_url = "http://erower.stronazen.pl/rowerOddaj.php";
         String back_url = "http://erower.stronazen.pl/return.php";
+        String saldo_dodaj_url = "http://erower.stronazen.pl/dodajsaldo.php";
+        String oddajA_url = "http://erower.stronazen.pl/rowerAwariaOddaj.php";
         if(type.equals("login")) {
             try {
                 UserName = params[1];
@@ -199,6 +201,41 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }else if(type.equals("DodajSaldo")){
+            try {
+                String login = params[1];
+                String saldo = params[2];
+                try {
+                    URL url = new URL(saldo_dodaj_url);
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                    httpURLConnection.setRequestMethod("POST");
+                    httpURLConnection.setDoOutput(true);
+                    httpURLConnection.setDoInput(true);
+                    OutputStream outputStream = httpURLConnection.getOutputStream();
+                    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                    String post_data = URLEncoder.encode("login","UTF-8")+"="+URLEncoder.encode(login,"UTF-8")+"&"
+                            + URLEncoder.encode("saldo","UTF-8")+"="+URLEncoder.encode(saldo,"UTF-8");
+                    bufferedWriter.write(post_data);
+                    bufferedWriter.flush();
+                    bufferedWriter.close();
+                    outputStream.close();
+                    InputStream inputStream = httpURLConnection.getInputStream();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+                    String result = "";
+                    String line = "";
+                    while ((line = bufferedReader.readLine()) != null) {
+                        result += line;
+                    }
+                    bufferedReader.close();
+                    inputStream.close();
+                    httpURLConnection.disconnect();
+                    return result;
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }else if(type.equals("rent")){
             try {
                 String login = params[1];
@@ -287,6 +324,47 @@ public class BackgroundWorker extends AsyncTask<String,Void,String> {
                     OutputStream outputStream = httpURLConnection.getOutputStream();
                     BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
                     String post_data = URLEncoder.encode("login", "UTF-8") + "=" + URLEncoder.encode(login, "UTF-8");
+                    bufferedWriter.write(post_data);
+                    bufferedWriter.flush();
+                    bufferedWriter.close();
+                    outputStream.close();
+                    InputStream inputStream = httpURLConnection.getInputStream();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+                    String result = "";
+                    String line = "";
+                    while ((line = bufferedReader.readLine()) != null) {
+                        result += line;
+                    }
+                    bufferedReader.close();
+                    inputStream.close();
+                    httpURLConnection.disconnect();
+                    return result;
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else if(type.equals("oddajAwaria")) {
+            try {
+                String login = params[1];
+                String id_roweru = params[2];
+                String id_stacji = params[3];
+                String opis = params[4];
+                String status = "1";
+                try {
+                    URL url = new URL(oddajA_url);
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                    httpURLConnection.setRequestMethod("POST");
+                    httpURLConnection.setDoOutput(true);
+                    httpURLConnection.setDoInput(true);
+                    OutputStream outputStream = httpURLConnection.getOutputStream();
+                    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                    String post_data = URLEncoder.encode("login","UTF-8")+"="+URLEncoder.encode(login,"UTF-8")+"&"
+                            + URLEncoder.encode("id_roweru","UTF-8")+"="+URLEncoder.encode(id_roweru,"UTF-8")+"&"
+                            + URLEncoder.encode("id_stacji","UTF-8")+"="+URLEncoder.encode(id_stacji,"UTF-8")+"&"
+                            + URLEncoder.encode("opis","UTF-8")+"="+URLEncoder.encode(opis,"UTF-8")+"&"
+                            + URLEncoder.encode("status","UTF-8")+"="+URLEncoder.encode(status,"UTF-8");
                     bufferedWriter.write(post_data);
                     bufferedWriter.flush();
                     bufferedWriter.close();
