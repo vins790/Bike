@@ -3,7 +3,7 @@ require "conn.php";
 $login = $_POST["login"];
 $id_stacji = $_POST["id_stacji"];
 $id_roweru = $_POST["id_roweru"];
-$mysql_qry = "SELECT id_roweru FROM wypozyczenia WHERE login='$login';";
+$mysql_qry = "SELECT id_rower FROM wypozyczenia WHERE login='$login';";
 $result = mysqli_query($conn, $mysql_qry);
 if (mysqli_num_rows($result) == 0) {
 	echo "Nie masz żadnego wypożyczonego roweru zarejestrowanego przez Nasz system :c";
